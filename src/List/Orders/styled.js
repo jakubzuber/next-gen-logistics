@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-export const List = styled.ul`
-    background-color: red;
-`;
-
-export const Order = styled.li`
+export const Order = styled.tr`
     border-bottom: 1px solid #eee;
     list-style-type: none;
     padding: 5px;
@@ -15,13 +11,7 @@ export const Order = styled.li`
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 `;
 
-export const Title = styled.div`
-    margin: 10px;
-    padding: 10px;
-    color: red;
-    background-color: teal;
-`
-
-export const OrderDetails = styled.div`
+export const OrderDetails = styled.th`
     max-width: 40px;
-`
+    max-width: 1200px;
+`;

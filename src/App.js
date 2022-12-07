@@ -1,13 +1,13 @@
-import Navigation from "./Navigation";
-import OrdersList from "./OrdersList";
+import TopNavigation from "./TopNavigation";
+import List from "./List";
 import { Main } from "./styled";
 
 
 function App() {
   return (
     <Main>
-      <Navigation />
-      <OrdersList />
+      <TopNavigation />
+      <List />
     </Main>
   );
 };

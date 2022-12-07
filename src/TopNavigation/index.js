@@ -1,6 +1,6 @@
 import { Nav, NavItem } from "./styled";
 
-const Navigation = () => {
+const TopNavigation = () => {
     return (
         <Nav>
             <NavItem>NEX-GEN-LOGISTICS</NavItem>
@@ -12,4 +12,4 @@ const Navigation = () => {
     );
 };
 
-export default Navigation;
+export default TopNavigation;
