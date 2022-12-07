@@ -7,9 +7,15 @@ const orderSlice = createSlice({
         orders: exampleTasks
     },
     reducers: {
-
+        addOrder: ({ orders }, { payload: order }) => {
+            orders.push(order)
+        },
     },
 });
+
+export const { 
+    addOrder
+} = orderSlice.actions;
 
     export const selectOrders = state => state.orders;
 

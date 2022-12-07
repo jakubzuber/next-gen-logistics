@@ -8,7 +8,7 @@ const Orders = () => {
     return (
         <>
             {orders.map(order => (
-                <Order>
+                <Order key={order.id}>
                     <OrderDetails>
                         {order.id}
                     </OrderDetails>
