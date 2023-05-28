@@ -1,18 +1,40 @@
-const config = require('./dbConfig');
-const sql = require('mssql');
+const config = require('./dbConfig')
+const sql = require('mssql')
 
-const getOrders = async() => {
+const validateLogIn = async(USERNAME) => {
     try {
         let pool = await sql.connect(config);
-        let orders = await pool.request().
-        query('SELECT ID, CLIENT, LENGHT, WIDTH, HEIGHT, CAST(COLLECTION_DATE AS VARCHAR(50)) AS COLLECTION, CAST(DELIVEERY_DATE AS VARCHAR(50)) AS DELIVERY FROM ORDERS1')
-        return orders
+        let data = await pool.request().query(`
+        select 
+        PASSWORD, ONE_TIME_PASSWORD
+        from USERS 
+        where LOGIN = '${USERNAME}'
+        and USER_FOR = 1
+        `)
+        return data
     }
     catch(error) {
         console.log(error)
     }
 };
 
+const setNewPasswrod = async(data) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        update USERS
+        set PASSWORD = '${data.PASSWORD}',
+            ONE_TIME_PASSWORD = 0
+        where LOGIN = '${data.USERNAME}'
+        and USER_FOR = 1
+        `)
+    }
+    catch(error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
-    getOrders
-} ;
+    validateLogIn,
+    setNewPasswrod
+};

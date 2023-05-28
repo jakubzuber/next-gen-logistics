@@ -1,6 +1,6 @@
 const config = {
-    user: 'NEXT-GEN',
-    password: 'next123',
+    user: 'sa',
+    password: 'Letsplay19!',
     server: 'JAKUBZUBER',
     database: 'NEXT_GEN_SQL',
     options: {

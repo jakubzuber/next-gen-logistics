@@ -12,12 +12,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cors());
 
-
-
-app.post('/api', async (req, res)=> {
-    const result = await dbOperation.getOrders(req.body)
+app.post('/valideLogIn', async(req,res) => {
+    const result = await dbOperation.validateLogIn(req.body.USERNAME);
     res.send(result.recordset)
-}) 
+});
+
+app.post('/valideLogIn/newPasswrod', async(req,res) => {
+    dbOperation.setNewPasswrod(req.body)
+    res.status(200).json({ success: true })
+});
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 
