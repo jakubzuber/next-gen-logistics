@@ -28,16 +28,16 @@ const SideMenu = () => {
                 <SubMenu icon={<WarehouseIcon />} label="Magazyn">
                     <MenuItem icon={<SouthIcon />} component={<Link to='/admission' />}>Przyjęcia</MenuItem>
                     <MenuItem icon={<ArrowUpwardIcon />} component={<Link to='/releases' />}>Wydania</MenuItem>
-                    <MenuItem icon={<SyncAltIcon />}>Przesunięcia</MenuItem>
-                    <MenuItem icon={<CheckBoxOutlineBlankIcon />}>Stany magazynowe</MenuItem>
+                    <MenuItem icon={<SyncAltIcon />}component={<Link to='/transfers' />}>Przesunięcia</MenuItem>
+                    <MenuItem icon={<CheckBoxOutlineBlankIcon />}component={<Link to='/stocks' />}>Stany magazynowe</MenuItem>
                 </SubMenu>
                 <SubMenu icon={<MenuBookIcon/>} label="Księgowość">
-                    <MenuItem icon={<TaskIcon />} >Wystawione fv</MenuItem>
-                    <MenuItem icon={<NoteAddIcon />}>Fv do wystawienia</MenuItem>
+                    <MenuItem icon={<TaskIcon />}component={<Link to='/invoices' />}>Wystawione fv</MenuItem>
+                    <MenuItem icon={<NoteAddIcon />}component={<Link to='/to-invoice' />}>Fv do wystawienia</MenuItem>
                 </SubMenu>
                 <SubMenu icon={<SettingsApplicationsIcon />} label="Administracja">
-                    <MenuItem icon={< PersonOutlineIcon />}>Użytkownicy</MenuItem>
-                    <MenuItem icon={<AssignmentIndIcon/>}>Klienci</MenuItem>
+                    <MenuItem icon={< PersonOutlineIcon />}component={<Link to='/users' />}>Użytkownicy</MenuItem>
+                    <MenuItem icon={<AssignmentIndIcon/>}component={<Link to='/clients' />}>Klienci</MenuItem>
                 </SubMenu>
             </Menu>
         </Sidebar>

@@ -1,12 +1,12 @@
 import SideMenu from "../../SideMenu";
-import { Container } from "../styled";
+import { Container } from "../../styled";
 
 const Clients = () => {
 
     return (
         <Container>
             <SideMenu />
-            <p>Faktury</p>
+            <p>Klienci</p>
         </Container>
     );
 };

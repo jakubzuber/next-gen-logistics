@@ -1,5 +1,6 @@
 import SideMenu from "../../SideMenu";
-import { Container } from "../styled";
+import { Container } from "../../styled";
+
 
 const Admission = () => {
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Form, Container, Title, Button, Input } from "../styled";
+import { Form, Container, Title, Button } from "../styled";
 
 const ForgetPasswordScreen = () => {
   const navigate = useNavigate()
