@@ -2,17 +2,13 @@ import styled from "styled-components";
 
 export const Topic = styled.div`
     text-align: center;
-    font-size: 30px;
-    background-color: #0057d9;
-    color: white;
-    padding: 5px;
-    margin-top: 1000px;
+    font-size: 20px;
+    color: #050505;
+    font-weight: 500;
+    padding: 2px;
     width: 100%;
-
-    
-    @media (max-width: 768px) {
-        min-width: 1200px;
-    }
+    background-color: white;
+    border-radius: 10px;
 `;
 
 export const Table = styled.table`
@@ -22,31 +18,43 @@ export const Table = styled.table`
     margin-left: auto;
     margin-right: auto;
 
+
     @media (max-width: 768px) {
         min-width: 1200px;
     }
 `;
 
 export const Thead = styled.thead`
-    position: sticky;
-    top: 0;
     background-color: #f6f9fc;
     color: #8493a5;
+    height: 30px;
+    color: #000000;
 `;
 
 export const Th = styled.th`
-    position: sticky;
-    top: 0;
-    background-color: #f6f9fc;
-    color: #8493a5;
-    border-bottom: 1px solid #dddddd;
-    padding: 10px 20px;
+    border-bottom: 2px solid #dddddd;
     text-align: center;
-    height: 60px;
 `;
 
 export const Td = styled.td`
     border-bottom: 1px solid #dddddd;
-    padding: 10px 0px;
+    padding: 5px 0px;
     text-align: center;
+    color: white;
+`;
+
+export const StyledButton = styled.div`
+    margin: 20px 0;
+    padding: 5px;
+    color: white;
+
+    :hover {
+        color: #1877e4;
+        cursor: pointer;
+    }
+`;
+
+export const FunctionButtons = styled.div`
+    display: flex;
+    justify-content: flex-end;
 `;

@@ -1,4 +1,4 @@
-import { Main } from "./styled";
+import { Main, MainContent } from "./styled";
 import { useState } from "react";
 
 import { Link, Outlet } from 'react-router-dom';
@@ -26,11 +26,11 @@ const MainMenu = () => {
 
     return (
         <Main collapsed={collapsed}>
-            <Sidebar collapsed={collapsed}>
+            <Sidebar style={{height: '100vh', backgroundColor: 'rgb(233, 233, 238)'}} collapsed={collapsed}>
                 <nav>
                     <ViewHeadlineIcon onClick={onClickMenuIcon} />
-                    <Menu>
-                        <SubMenu icon={<WarehouseIcon />} label="Magazyn">
+                    <Menu >
+                        <SubMenu  icon={<WarehouseIcon />} label="Magazyn">
                             <MenuItem icon={<SouthIcon />} component={<Link to='admission' />}>Przyjęcia</MenuItem>
                             <MenuItem icon={<ArrowUpwardIcon />} component={<Link to='releases' />}>Wydania</MenuItem>
                             <MenuItem icon={<SyncAltIcon />} component={<Link to='transfers' />}>Przesunięcia</MenuItem>
@@ -47,11 +47,15 @@ const MainMenu = () => {
                     </Menu>
                 </nav>
             </Sidebar>
-            <div>
+            <MainContent>
                 <Outlet />
-            </div>
+            </MainContent>
         </Main>
     );
+};
+
+const subMenuStyle = {
+    backgroundColor: 'rgb(177, 176, 192)'
 };
 
 export default MainMenu;

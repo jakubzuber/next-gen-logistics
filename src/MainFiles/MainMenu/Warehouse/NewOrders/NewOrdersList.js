@@ -3,7 +3,7 @@ import NewOrder from "./NewOrder";
 import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Table, Topic, Thead, Td, Th } from "./styled";
+import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons } from "./styled";
 
 const NewOrders = () => {
     const dispatch = useDispatch();
@@ -24,14 +24,15 @@ const NewOrders = () => {
 
     return (
         <>
-            <button
-                style={{ height: 40, widTh: 100 }}
-                onClick={toggleModal}
-            >Dodaj nowe zlecenie</button>
+            <Topic>PRZYJĘCIA</Topic>
+            <FunctionButtons>
+                <StyledButton
+                    onClick={toggleModal}
+                >Dodaj nowe zlecenie</StyledButton>
+            </FunctionButtons>
             <Table>
                 <Thead>
                     <tr>
-                        <Th></Th>
                         <Th>adasd</Th>
                         <Th>adasd</Th>
                         <Th>adasd</Th>
