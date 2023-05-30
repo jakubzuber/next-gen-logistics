@@ -37,7 +37,7 @@ const LoginPage = () => {
       if (newPasswordRequired === 1) {
         navigate('new-password', {state: {username: username, password: password}})
       } else {
-        navigate("admission")
+        navigate("mainmenu")
       }
     } else {
       setStatus(true)

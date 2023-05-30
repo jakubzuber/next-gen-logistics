@@ -1,13 +1,8 @@
-import SideMenu from "../../SideMenu";
-import { Container } from "../../styled";
 
 const Invoices = () => {
 
     return (
-        <Container>
-            <SideMenu />
-            <p>Faktury</p>
-        </Container>
+       <p>Faktury</p>
     );
 };
 

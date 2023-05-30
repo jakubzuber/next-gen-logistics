@@ -31,10 +31,23 @@ const setNewPasswrod = async(data) => {
     }
     catch(error) {
         console.log(error)
-    }
-}
+    };
+};
 
+const getNewOrdersData = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT * FROM NOWE_PRZYJECIA
+        `)
+        return data
+    }
+    catch(error) {
+        console.log(error)
+    }
+};
 module.exports = {
     validateLogIn,
-    setNewPasswrod
+    setNewPasswrod,
+    getNewOrdersData
 };
