@@ -38,7 +38,7 @@ const getNewOrdersData = async() => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
-        SELECT * FROM NOWE_PRZYJECIA
+        SELECT * FROM PRZYJECIA
         `)
         return data
     }

@@ -1,8 +1,8 @@
-import { Main, MainContent } from "./styled";
+import { Main, MainContent, StyledMenuItem, StyledSubMenu } from "./styled";
 import { useState } from "react";
 
-import { Link, Outlet } from 'react-router-dom';
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { Outlet, Link } from 'react-router-dom';
+import { Sidebar, Menu } from 'react-pro-sidebar';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import SouthIcon from '@mui/icons-material/South';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -26,24 +26,26 @@ const MainMenu = () => {
 
     return (
         <Main collapsed={collapsed}>
-            <Sidebar style={{height: '100vh', backgroundColor: 'rgb(233, 233, 238)'}} collapsed={collapsed}>
+            <Sidebar 
+                backgroundColor="#272953"
+                style={{height: '100vh'}} collapsed={collapsed}>
                 <nav>
                     <ViewHeadlineIcon onClick={onClickMenuIcon} />
-                    <Menu >
-                        <SubMenu  icon={<WarehouseIcon />} label="Magazyn">
-                            <MenuItem icon={<SouthIcon />} component={<Link to='admission' />}>Przyjęcia</MenuItem>
-                            <MenuItem icon={<ArrowUpwardIcon />} component={<Link to='releases' />}>Wydania</MenuItem>
-                            <MenuItem icon={<SyncAltIcon />} component={<Link to='transfers' />}>Przesunięcia</MenuItem>
-                            <MenuItem icon={<CheckBoxOutlineBlankIcon />} component={<Link to='stocks' />}>Stany magazynowe</MenuItem>
-                        </SubMenu>
-                        <SubMenu icon={<MenuBookIcon />} label="Księgowość">
-                            <MenuItem icon={<TaskIcon />} component={<Link to='invoices' />}>Wystawione fv</MenuItem>
-                            <MenuItem icon={<NoteAddIcon />} component={<Link to='to-invoice' />}>Fv do wystawienia</MenuItem>
-                        </SubMenu>
-                        <SubMenu icon={<SettingsApplicationsIcon />} label="Administracja">
-                            <MenuItem icon={< PersonOutlineIcon />} component={<Link to='users' />}>Użytkownicy</MenuItem>
-                            <MenuItem icon={<AssignmentIndIcon />} component={<Link to='clients' />}>Klienci</MenuItem>
-                        </SubMenu>
+                    <Menu>
+                        <StyledSubMenu style={{backgroundColor: 'transparent'}} icon={<WarehouseIcon />} label="Magazyn">
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<SouthIcon />} component={<Link to='admission' />}>Przyjęcia</StyledMenuItem>
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<ArrowUpwardIcon />} component={<Link to='releases' />}>Wydania </StyledMenuItem>
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<SyncAltIcon />} component={<Link to='transfers' />}>Przesunięcia </StyledMenuItem>
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<CheckBoxOutlineBlankIcon />} component={<Link to='stocks' />}>Stany magazynowe</StyledMenuItem>
+                        </StyledSubMenu>
+                        <StyledSubMenu style={{backgroundColor: 'transparent'}} icon={<MenuBookIcon />} label="Księgowość">
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<TaskIcon />} component={<Link to='invoices' />}>Wystawione fv</StyledMenuItem>
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<NoteAddIcon />} component={<Link to='to-invoice' />}>Fv do wystawienia</StyledMenuItem>
+                        </StyledSubMenu>
+                        <StyledSubMenu style={{backgroundColor: 'transparent'}} icon={<SettingsApplicationsIcon />} label="Administracja">
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={< PersonOutlineIcon />} component={<Link to='users' />}>Użytkownicy</StyledMenuItem>
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<AssignmentIndIcon />} component={<Link to='clients' />}>Klienci</StyledMenuItem>
+                        </StyledSubMenu>
                     </Menu>
                 </nav>
             </Sidebar>
@@ -54,8 +56,5 @@ const MainMenu = () => {
     );
 };
 
-const subMenuStyle = {
-    backgroundColor: 'rgb(177, 176, 192)'
-};
 
 export default MainMenu;

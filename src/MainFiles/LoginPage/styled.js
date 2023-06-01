@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const Form = styled.form`
     width: 20%;
-    background-color: blue;
+    background-color: #272953;
     margin-top: 25vh;
     border-radius: 5px;
     box-shadow: 1px 1px 10px;
@@ -45,10 +45,9 @@ export const Button = styled.p`
     background-color: transparent;
     padding: 6px;
     color: white;
-    border: 2px solid blue;
 
     &:hover{
-        color: black;
+        color: #9e9fac;
         cursor: pointer;
     }
 `;

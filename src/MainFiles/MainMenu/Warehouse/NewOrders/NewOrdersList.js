@@ -3,7 +3,7 @@ import NewOrder from "./NewOrder";
 import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons } from "./styled";
+import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons, Tr } from "./styled";
 
 const NewOrders = () => {
     const dispatch = useDispatch();
@@ -14,16 +14,16 @@ const NewOrders = () => {
         dispatch(fetchNewOrders())
     }, [dispatch])
 
-    setTimeout(() => {
-        console.log(newOrders[0]);
-    }, 2000);
-
     const toggleModal = () => {
         setModal(!modal)
-    }
+    };
+
+    const closeModal = () => {
+        setModal(false)
+    };
 
     return (
-        <>
+        <div>
             <Topic>PRZYJĘCIA</Topic>
             <FunctionButtons>
                 <StyledButton
@@ -33,25 +33,41 @@ const NewOrders = () => {
             <Table>
                 <Thead>
                     <tr>
-                        <Th>adasd</Th>
-                        <Th>adasd</Th>
-                        <Th>adasd</Th>
-                        <Th>adasd</Th>
-                        <Th>adasd</Th>
+                        <Th>ID</Th>
+                        <Th>KLIENT_ID</Th>
+                        <Th>NR_WLASNY</Th>
+                        <Th>ILOSC</Th>
+                        <Th>WAGA</Th>
+                        <Th>NADAWCA</Th>
+                        <Th>KOD</Th>
+                        <Th>MIEJSCOWOSC</Th>
+                        <Th>ADRES</Th>
+                        <Th>KRAJ</Th>
+                        <Th>UWAGI</Th>
+                        <Th>DANE AUTA</Th>
                     </tr>
                 </Thead>
                 <tbody>
-                    <tr>
-                        <Td>adasd</Td>
-                        <Td>adasd</Td>
-                        <Td>adasd</Td>
-                        <Td>adasd</Td>
-                        <Td>adasd</Td>
-                    </tr>
+                    {newOrders.map(orders => (
+                        <Tr key={orders.ID}>
+                            <Td>{orders.ID}</Td>
+                            <Td>{orders.KLIENT_ID}</Td>
+                            <Td>{orders.NR_WLASNY}</Td>
+                            <Td>{orders.ILOSC}</Td>
+                            <Td>{orders.WAGA}</Td>
+                            <Td>{orders.NADAWCA}</Td>
+                            <Td>{orders.KOD_POCZTOWY}</Td>
+                            <Td>{orders.MIEJSCOWOSC}</Td>
+                            <Td>{orders.ADRES}</Td>
+                            <Td>{orders.KRAJ}</Td>
+                            <Td>{orders.UWAGI}</Td>
+                            <Td>{orders.DANE_AUTA}</Td>
+                        </Tr>
+                    ))}
                 </tbody>
             </Table>
-            <NewOrder modal={modal} />
-        </>
+            <NewOrder modal={modal} closeModal={closeModal}/>
+        </div>
     );
 };
 

@@ -1,3 +1,4 @@
+/*eslint eqeqeq: "off"*/
 import styled from "styled-components";
 
 export const Topic = styled.div`
@@ -9,6 +10,7 @@ export const Topic = styled.div`
     width: 100%;
     background-color: white;
     border-radius: 10px;
+    margin: 10px 0px;
 `;
 
 export const Table = styled.table`
@@ -29,6 +31,7 @@ export const Thead = styled.thead`
     color: #8493a5;
     height: 30px;
     color: #000000;
+    font-size: 12px;
 `;
 
 export const Th = styled.th`
@@ -36,20 +39,31 @@ export const Th = styled.th`
     text-align: center;
 `;
 
+export const Tr = styled.tr`
+    transition-duration: 300ms ;
+
+    :hover {
+        background-color: #272953;
+        cursor: pointer;
+    }
+`;
+
 export const Td = styled.td`
     border-bottom: 1px solid #dddddd;
     padding: 5px 0px;
     text-align: center;
     color: white;
+    font-size: 12px;
 `;
 
 export const StyledButton = styled.div`
     margin: 20px 0;
     padding: 5px;
     color: white;
+    transition-duration: 300ms ;
 
     :hover {
-        color: #1877e4;
+        color: #9e9fac;
         cursor: pointer;
     }
 `;
@@ -57,4 +71,33 @@ export const StyledButton = styled.div`
 export const FunctionButtons = styled.div`
     display: flex;
     justify-content: flex-end;
+`;
+
+export const StyledInput = styled.input`
+    color: white;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 10px;
+
+    :hover {
+        border: 1px solid white;
+    }
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    visibility: ${props => props.data != '' ? '' : 'hidden'};
+    padding: 5px;
+    margin-top: 30px;
+`;
+
+export const NewOrderButton = styled.div`
+    transition-duration: 300ms;
+
+    :hover {
+     color: #9e9fac;
+     cursor: pointer;
+    }
 `;
