@@ -2,14 +2,15 @@ import { useState } from "react";
 import Popup from "reactjs-popup";
 import * as XLSX from "xlsx";
 import { Table, Thead, Td, Topic, StyledInput, ButtonContainer, NewOrderButton } from "./styled";
-import { useEffect } from "react";
+import ReactJsAlert from "reactjs-alert";
 
-const NewOrder = ({ modal, closeModal }) => {
+const NewOrder = ({ modal, closeModal, clients }) => {
     const [data, setData] = useState([]);
+    const [selectedClient, setSelectedClient] = useState();
 
-    useEffect(() => {
-        setOpen(modal)
-    }, [modal]);
+    const [status, setStatus] = useState(false);
+    const [type, setType] = useState("");
+    const [title, setTitle] = useState("");
 
     const handleFileUpload = (e) => {
         const render = new FileReader();
@@ -24,23 +25,58 @@ const NewOrder = ({ modal, closeModal }) => {
         };
     };
 
-    console.log(data)
+    const sendNewOrder = async(newOrder, data) => {
+        await fetch('/setNewOrder', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                newOrder,
+                data
+                })
+            })
+        };  
 
     const onClose = () => {
         closeModal()
         setData([])
+        setSelectedClient()
+    };
+
+    const onSubmit = () => {
+        if (selectedClient === undefined) {
+            setStatus(true)
+            setType("error")
+            setTitle("Klient nie został uzupełniony")
+        } else {
+        const newOrder = {
+            client: Number(selectedClient),
+            nr: data[0].NR_WLASNY, 
+            number: data.map(i => (i.ILOSC)).reduce((a, b) => a + b,0), 
+            weight: data.map(i => (i.WAGA)).reduce((a, b) => a + b,0).toFixed(3),
+            nadawca: data[0].NADAWCA,
+            kod: data[0].KOD_POCZTOWY,
+            miejscowosc: data[0].MIEJSCOWOSC,
+            adres: data[0].ADRES,
+            kraj: data[0].KRAJ,
+            dane: data[0].DANE_AUTA
+        }
+        sendNewOrder(newOrder, data)
+        }
     };
 
     return (
         <Popup open={modal} onClose={onClose}>
             <div style={{ backgroundColor: '#272953', padding: 30, maxWidth: '1400px', borderRadius: 10, textAlign: 'center', border: '3px solid white' }}>
                 <Topic>NOWE PRZYJĘCIE</Topic>
+
                 <StyledInput
                     type="file"
                     accept=".xlsx, .xls"
                     onChange={handleFileUpload}
-                >
-                </StyledInput>
+                />
                 {data.length > 0 && (
                     <Table>
                         <Thead>
@@ -62,17 +98,32 @@ const NewOrder = ({ modal, closeModal }) => {
                     </Table>
                 )}
                 <ButtonContainer data={data}>
+                    <form>
+                        <select style={{ padding: 5, backgroundColor: '#272953', border: 'none', color: 'white', fontSize: '16px' }} required onChange={({ target }) => setSelectedClient(target.value)} defaultValue="">
+                            <option value="" disabled >Wybierz klienta</option>
+                            {clients.map(client => (
+                                <option key={client.ID} value={client.ID}>{client.SYMBOL}</option>
+                            ))}
+                        </select>
+                    </form>
                     <NewOrderButton
+                        onClick={onSubmit}
                     >
                         Zaakceptuj
                     </NewOrderButton>
                     <NewOrderButton
-                    onClick={onClose}
+                        onClick={onClose}
                     >
                         Odrzuć
                     </NewOrderButton>
                 </ButtonContainer>
             </div>
+            <ReactJsAlert
+                status={status} // true or false
+                type={type} // success, warning, error, info
+                title={title}
+                Close={() => setStatus(false)}
+            />
         </Popup>
     );
 };

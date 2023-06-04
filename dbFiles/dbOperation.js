@@ -1,7 +1,7 @@
 const config = require('./dbConfig')
 const sql = require('mssql')
 
-const validateLogIn = async(USERNAME) => {
+const validateLogIn = async (USERNAME) => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
@@ -13,12 +13,12 @@ const validateLogIn = async(USERNAME) => {
         `)
         return data
     }
-    catch(error) {
+    catch (error) {
         console.log(error)
-    }
+    };
 };
 
-const setNewPasswrod = async(data) => {
+const setNewPasswrod = async (data) => {
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
@@ -29,12 +29,12 @@ const setNewPasswrod = async(data) => {
         and USER_FOR = 1
         `)
     }
-    catch(error) {
+    catch (error) {
         console.log(error)
     };
 };
 
-const getNewOrdersData = async() => {
+const getNewOrdersData = async () => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
@@ -42,12 +42,55 @@ const getNewOrdersData = async() => {
         `)
         return data
     }
-    catch(error) {
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const getClientList = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT ID, SYMBOL FROM KLIENCI
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const setNewOrder = async ({newOrder, data}) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        INSERT INTO PRZYJECIA ( ID, KLIENT_ID, NR_WLASNY, ILOSC, WAGA, NADAWCA, KOD_POCZTOWY, MIEJSCOWOSC, ADRES, KRAJ, DANE_AUTA)
+        VALUES (
+		3,
+        ${newOrder.client},
+        '${newOrder.nr}',
+        ${newOrder.number},
+        ${newOrder.weight},
+        '${newOrder.nadawca}',
+        '${newOrder.kod}',
+        '${newOrder.miejscowosc}',
+        '${newOrder.adres}',
+        '${newOrder.kraj}',
+        '${newOrder.dane}'
+        )
+        
+        
+        `)
+    }
+    catch (error) {
         console.log(error)
     }
 };
+
 module.exports = {
     validateLogIn,
     setNewPasswrod,
-    getNewOrdersData
+    getNewOrdersData,
+    getClientList,
+    setNewOrder
 };
