@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewOrder from "./NewOrder";
 import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons, Tr } from "./styled";
 import RightClickMenu from "./RightClickMenu";
 
@@ -18,7 +17,18 @@ const NewOrders = () => {
         y: 0
     };
 
+    
+
+
     const [contexMenu, setContextMenu ] = useState(initalContexMenu)
+
+    useEffect(() => {
+        let handler = () => {
+            setContextMenu(initalContexMenu)
+        }
+
+        document.addEventListener("mousedown", handler)
+    });
 
     const fetchClientsList = async () => {
         const newData = await fetch('./fetchClients', {

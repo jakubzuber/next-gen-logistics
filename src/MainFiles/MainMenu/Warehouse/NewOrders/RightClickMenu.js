@@ -1,13 +1,8 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
-const RightClickMenu = ({ x, y, closeContexMenu }) => {
-    const contexMenuRef = useRef(null)
-    useClickOutside(contexMenuRef, closeContexMenu)
-
+const RightClickMenu = ({ x, y }) => {
     return (
         <div
-            ref={contexMenuRef}
-            onClick={() => closeContexMenu()}
             style={{ position: 'absolute', backgroundColor: 'red', top: `${y}px`, left: `${x}px` }} >
             <p>asdasdasd</p>
         </div>
