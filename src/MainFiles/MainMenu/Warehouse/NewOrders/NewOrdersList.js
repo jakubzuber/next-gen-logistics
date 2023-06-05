@@ -14,22 +14,26 @@ const NewOrders = () => {
     const initalContexMenu = {
         show: false,
         x: 0,
-        y: 0
+        y: 0,
+        id: null
     };
 
-    
-
-
     const [contexMenu, setContextMenu ] = useState(initalContexMenu)
+    const [whWorker, setWhWorker] = useState([]);
+    const fetchWhWorker = async () => {
+        const newData = await fetch('./fetchWhWorkers', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        return setWhWorker(newData)
+    };
 
-    useEffect(() => {
-        let handler = () => {
-            setContextMenu(initalContexMenu)
-        }
-
-        document.addEventListener("mousedown", handler)
-    });
-
+ 
+    
     const fetchClientsList = async () => {
         const newData = await fetch('./fetchClients', {
             method: 'GET',
@@ -39,7 +43,6 @@ const NewOrders = () => {
             }
         })
         .then(res => res.json())
-        console.log(newData)
         return setClients(newData)
     };
 
@@ -56,11 +59,11 @@ const NewOrders = () => {
         setModal(false)
     };
 
-    const handleContexMenu = (e) => {
+    const handleContexMenu = ({e, id}) => {
         e.preventDefault()
-
         const { pageX, pageY } = e
-        setContextMenu({ show: true, x: pageX, y: pageY })
+        setContextMenu({ show: true, x: pageX, y: pageY, id: id })
+        fetchWhWorker()
     };
 
     const contexMenuClose = () => { 
@@ -69,7 +72,7 @@ const NewOrders = () => {
    
     return (
         <div>
-             { contexMenu.show && <RightClickMenu closeContexMenu={contexMenuClose} x={contexMenu.x} y={contexMenu.y} />}
+             { contexMenu.show && <RightClickMenu whWorker={whWorker} closeContexMenu={contexMenuClose} x={contexMenu.x} y={contexMenu.y} id={contexMenu.id} />}
             <Topic>PRZYJĘCIA</Topic>
             <FunctionButtons>
                 <StyledButton
@@ -92,13 +95,14 @@ const NewOrders = () => {
                         <Th>KRAJ</Th>
                         <Th>UWAGI</Th>
                         <Th>DANE AUTA</Th>
+                        <Th>OBSŁUGA</Th>
                     </tr>
                 </Thead>
                 
                 <tbody>
                     {newOrders.map(orders => (
                         <Tr 
-                        onContextMenu={(e) => {handleContexMenu(e)}} 
+                        onContextMenu={(e) => {handleContexMenu({e, id: orders.ID})}} 
                         key={orders.ID}
                         >
                             <Td>{orders.ID}</Td>
@@ -113,6 +117,7 @@ const NewOrders = () => {
                             <Td>{orders.KRAJ}</Td>
                             <Td>{orders.UWAGI}</Td>
                             <Td>{orders.DANE_AUTA}</Td>
+                            <Td>{orders.OBSLUGA}</Td>
                         </Tr>
                     ))}
                 </tbody>

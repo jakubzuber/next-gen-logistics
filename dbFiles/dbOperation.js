@@ -60,6 +60,19 @@ const getClientList = async () => {
     };
 };
 
+const getWhWorkers = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT ID_USER, CONCAT(NAME, ' ', SURNAME) SYMBOL FROM USERS WHERE USER_FOR = 2
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
 const setNewOrder = async ({newOrder, data}) => {
     try {
         let pool = await sql.connect(config);
@@ -87,10 +100,29 @@ const setNewOrder = async ({newOrder, data}) => {
     }
 };
 
+const setWorkerToOrder = async (data) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        update PRZYJECIA
+        set OBSLUGA = '${data.idWorker}',
+            OBSLUGA_START = GETDATE()
+        where ID = '${data.idOrder}'
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+
+
 module.exports = {
     validateLogIn,
     setNewPasswrod,
     getNewOrdersData,
     getClientList,
-    setNewOrder
+    setNewOrder,
+    getWhWorkers,
+    setWorkerToOrder
 };
