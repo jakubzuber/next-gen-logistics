@@ -1,25 +1,23 @@
 import { useState, useEffect } from "react";
-import NewOrder from "./NewOrder";
-import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
 import { useSelector, useDispatch } from "react-redux";
+import NewOrder from "./components/NewOrder";
+import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
 import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons, Tr } from "./styled";
-import RightClickMenu from "./RightClickMenu";
+import RightClickMenu from "./components/RightClickMenu";
 
 const NewOrders = () => {
     const dispatch = useDispatch();
-    const [modal, setModal] = useState(false);
     const { newOrders } = useSelector(selectNewOrders);
+
+    useEffect(() => {
+        dispatch(fetchNewOrders())
+    }, [dispatch])
+
+    // modal functions (new Order functions)
+
+    const [modal, setModal] = useState(false);
     const [clients, setClients] = useState([]);
 
-    const initalContexMenu = {
-        show: false,
-        x: 0,
-        y: 0,
-        id: null
-    };
-
-    const [contexMenu, setContextMenu ] = useState(initalContexMenu)
-    const [whWorker, setWhWorker] = useState([]);
     const fetchWhWorker = async () => {
         const newData = await fetch('./fetchWhWorkers', {
             method: 'GET',
@@ -28,12 +26,10 @@ const NewOrders = () => {
                 'Accept': 'application/json'
             }
         })
-        .then(res => res.json())
+            .then(res => res.json())
         return setWhWorker(newData)
     };
 
- 
-    
     const fetchClientsList = async () => {
         const newData = await fetch('./fetchClients', {
             method: 'GET',
@@ -42,44 +38,50 @@ const NewOrders = () => {
                 'Accept': 'application/json'
             }
         })
-        .then(res => res.json())
+            .then(res => res.json())
         return setClients(newData)
     };
 
-    useEffect(() => {
-        dispatch(fetchNewOrders())
-    }, [dispatch])
-
     const toggleModal = () => {
         fetchClientsList()
-        setModal(!modal)  
+        setModal(!modal)
     };
 
     const closeModal = () => {
         setModal(false)
     };
 
-    const handleContexMenu = ({e, id}) => {
+    // contex menu functions (assian wh worker functions)
+
+    const initalContexMenu = {
+        show: false,
+        x: 0,
+        y: 0,
+        id: null
+    };
+    const [contexMenu, setContextMenu] = useState(initalContexMenu)
+    const [whWorker, setWhWorker] = useState([]);
+
+    const handleContexMenu = ({ e, id }) => {
         e.preventDefault()
         const { pageX, pageY } = e
         setContextMenu({ show: true, x: pageX, y: pageY, id: id })
         fetchWhWorker()
     };
 
-    const contexMenuClose = () => { 
+    const contexMenuClose = () => {
         setContextMenu(initalContexMenu)
     };
-   
+
     return (
         <div>
-             { contexMenu.show && <RightClickMenu whWorker={whWorker} closeContexMenu={contexMenuClose} x={contexMenu.x} y={contexMenu.y} id={contexMenu.id} />}
+            {contexMenu.show && <RightClickMenu whWorker={whWorker} closeContexMenu={contexMenuClose} x={contexMenu.x} y={contexMenu.y} id={contexMenu.id} />}
             <Topic>PRZYJĘCIA</Topic>
             <FunctionButtons>
                 <StyledButton
                     onClick={toggleModal}
                 >Dodaj nowe zlecenie</StyledButton>
             </FunctionButtons>
-            
             <Table>
                 <Thead>
                     <tr>
@@ -98,12 +100,11 @@ const NewOrders = () => {
                         <Th>OBSŁUGA</Th>
                     </tr>
                 </Thead>
-                
                 <tbody>
                     {newOrders.map(orders => (
-                        <Tr 
-                        onContextMenu={(e) => {handleContexMenu({e, id: orders.ID})}} 
-                        key={orders.ID}
+                        <Tr
+                            onContextMenu={(e) => { handleContexMenu({ e, id: orders.ID }) }}
+                            key={orders.ID}
                         >
                             <Td>{orders.ID}</Td>
                             <Td>{orders.KLIENT_ID}</Td>
@@ -122,7 +123,7 @@ const NewOrders = () => {
                     ))}
                 </tbody>
             </Table>
-            <NewOrder modal={modal} closeModal={closeModal} clients={clients}/>
+            <NewOrder modal={modal} closeModal={closeModal} clients={clients} />
         </div>
     );
 };

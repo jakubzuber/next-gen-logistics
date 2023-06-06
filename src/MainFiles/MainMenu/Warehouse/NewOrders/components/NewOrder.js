@@ -1,16 +1,19 @@
 import { useState } from "react";
+import ReactJsAlert from "reactjs-alert";
 import Popup from "reactjs-popup";
 import * as XLSX from "xlsx";
-import { Table, Thead, Td, Topic, StyledInput, ButtonContainer, NewOrderButton } from "./styled";
-import ReactJsAlert from "reactjs-alert";
+import { Table, Thead, Td, Topic, StyledInput, ButtonContainer, NewOrderButton } from "../styled";
+import { StyledNewDataContainer } from './styled'
+
 
 const NewOrder = ({ modal, closeModal, clients }) => {
-    const [data, setData] = useState([]);
-    const [selectedClient, setSelectedClient] = useState();
-
+    // error hendler
     const [status, setStatus] = useState(false);
     const [type, setType] = useState("");
     const [title, setTitle] = useState("");
+
+    // excel functions 
+    const [data, setData] = useState([]);
 
     const handleFileUpload = (e) => {
         const render = new FileReader();
@@ -25,19 +28,22 @@ const NewOrder = ({ modal, closeModal, clients }) => {
         };
     };
 
-    const sendNewOrder = async(newOrder, data) => {
+    // sending new order to database functions
+    const [selectedClient, setSelectedClient] = useState();
+
+    const sendNewOrder = async (newOrder, data) => {
         await fetch('/setNewOrder', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
                 newOrder,
                 data
-                })
             })
-        };  
+        })
+    };
 
     const onClose = () => {
         closeModal()
@@ -51,25 +57,24 @@ const NewOrder = ({ modal, closeModal, clients }) => {
             setType("error")
             setTitle("Klient nie został uzupełniony")
         } else {
-        const newOrder = {
-            client: Number(selectedClient),
-            nr: data[0].NR_WLASNY, 
-            number: data.map(i => (i.ILOSC)).reduce((a, b) => a + b,0), 
-            weight: data.map(i => (i.WAGA)).reduce((a, b) => a + b,0).toFixed(3),
-            nadawca: data[0].NADAWCA,
-            kod: data[0].KOD_POCZTOWY,
-            miejscowosc: data[0].MIEJSCOWOSC,
-            adres: data[0].ADRES,
-            kraj: data[0].KRAJ,
-            dane: data[0].DANE_AUTA
-        }
-        sendNewOrder(newOrder, data)
+            const newOrder = {
+                client: Number(selectedClient),
+                number: data.map(i => (i.ILOSC)).reduce((a, b) => a + b, 0),
+                weight: data.map(i => (i.WAGA)).reduce((a, b) => a + b, 0).toFixed(3),
+                nadawca: data[0].NADAWCA,
+                kod: data[0].KOD_POCZTOWY,
+                miejscowosc: data[0].MIEJSCOWOSC,
+                adres: data[0].ADRES,
+                kraj: data[0].KRAJ,
+                dane: data[0].DANE_AUTA
+            }
+            sendNewOrder(newOrder, data)
         }
     };
 
     return (
         <Popup open={modal} onClose={onClose}>
-            <div style={{ backgroundColor: '#272953', padding: 30, maxWidth: '1400px', borderRadius: 10, textAlign: 'center', border: '3px solid white' }}>
+            <StyledNewDataContainer>
                 <Topic>NOWE PRZYJĘCIE</Topic>
 
                 <StyledInput
@@ -117,7 +122,7 @@ const NewOrder = ({ modal, closeModal, clients }) => {
                         Odrzuć
                     </NewOrderButton>
                 </ButtonContainer>
-            </div>
+            </StyledNewDataContainer>
             <ReactJsAlert
                 status={status} // true or false
                 type={type} // success, warning, error, info

@@ -38,7 +38,7 @@ const getNewOrdersData = async () => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
-        SELECT * FROM PRZYJECIA
+        SELECT * FROM PRZYJECIA1
         `)
         return data
     }
@@ -73,15 +73,20 @@ const getWhWorkers = async () => {
     };
 };
 
-const setNewOrder = async ({newOrder, data}) => {
+var format = require('pg-format');
+
+const setNewOrder = async ({ newOrder, data }) => {
+    //console.log(format('INSERT INTO test_table (id, name) VALUES %L', data));
+    //console.log(data)
+    //data.map(a => console.log(a.KOD_PRODUKTU))
+    //onsole.log(`INSERT INTO PRZYJECIA_SZCZEGOLY (KOD_PRODUKTU, NAZWA_PRODUKTU) VALUES ${data.map(a => `(${a.KOD_PRODUKTU}, ${a.NAZWA_PRODUKTU})`)} `)
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
-        INSERT INTO PRZYJECIA ( ID, KLIENT_ID, NR_WLASNY, ILOSC, WAGA, NADAWCA, KOD_POCZTOWY, MIEJSCOWOSC, ADRES, KRAJ, DANE_AUTA)
+
+        INSERT INTO PRZYJECIA1 (KLIENT_ID, ILOSC, WAGA, NADAWCA, KOD_POCZTOWY, MIEJSCOWOSC, ADRES, KRAJ, DANE_AUTA)
         VALUES (
-		3,
         ${newOrder.client},
-        '${newOrder.nr}',
         ${newOrder.number},
         ${newOrder.weight},
         '${newOrder.nadawca}',
@@ -91,8 +96,11 @@ const setNewOrder = async ({newOrder, data}) => {
         '${newOrder.kraj}',
         '${newOrder.dane}'
         )
+
+        DECLARE @ID_PRZYJECIA INT = (SELECT TOP 1 ID FROM PRZYJECIA1 WHERE KLIENT_ID = ${newOrder.client} ORDER BY ID DESC)
         
-        
+        INSERT INTO PRZYJECIA_SZCZEGOLY (PRZYJECIE_ID, KOD_PRODUKTU, NAZWA_PRODUKTU, ILOSC, WAGA, PAKOWANIE, UWAGI) VALUES 
+            ${data.map(a => `( @ID_PRZYJECIA, '${a.KOD_PRODUKTU}', '${a.NAZWA_PRODUKTU}', ${a.ILOSC},${a.WAGA},'${a.PAKOWANIE}','${a.UWAGI}')`)}
         `)
     }
     catch (error) {
@@ -100,11 +108,12 @@ const setNewOrder = async ({newOrder, data}) => {
     }
 };
 
+
 const setWorkerToOrder = async (data) => {
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
-        update PRZYJECIA
+        update PRZYJECIA1
         set OBSLUGA = '${data.idWorker}',
             OBSLUGA_START = GETDATE()
         where ID = '${data.idOrder}'

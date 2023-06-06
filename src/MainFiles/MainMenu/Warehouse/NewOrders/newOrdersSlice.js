@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-
 export const fetchNewOrders = createAsyncThunk('routes/fetchNewOrders', async () => {
     const response = await fetch('./apiFetchNewOrders', {
         method: 'GET',

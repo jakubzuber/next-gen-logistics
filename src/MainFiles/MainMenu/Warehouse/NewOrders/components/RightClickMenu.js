@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { StyledSelect, StyledForm } from './styled'
 
 const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
     let menuRef = useRef();
 
-    // useEffect do zamknięcia onContexMenu po klicknięciu w obaszar poza listą
-
+    // useEffect to close contexMenu on click outside container
     useEffect(() => {
         let handler = (e) => {
             if (!menuRef.current.contains(e.target)) {
@@ -17,8 +17,7 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
         }
     }, [closeContexMenu]);
 
-    // update na bazie odnośnie wybranego magazyniera
-
+    // upade on database - set wh worder to order
     const setWorkerToOrder = async ({id, worker}) => {
         if (worker === null || worker === "") {
             return
@@ -35,15 +34,17 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
                 })
             })
             closeContexMenu();
+            window.location.reload(false);
         }
     };
 
     return (
-        <form
+        <StyledForm
             ref={menuRef}
-            style={{ position: 'absolute', top: `${y - 10}px`, left: `${x + 15}px`, width: '5%', height: '5%', zIndex: 2 }} >
-            <select
-                style={{ padding: 5, backgroundColor: 'white', border: 'none', fontSize: '16px' }}
+            x={x}
+            y={y}
+            >
+            <StyledSelect
                 required
                 onChange={({ target }) => setWorkerToOrder({worker: target.value, id})}
                 defaultValue=""
@@ -52,8 +53,8 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
                 {whWorker.map(worker => (
                     <option key={worker.ID} value={worker.ID}>{worker.SYMBOL}</option>
                 ))}
-            </select>
-        </form >
+            </StyledSelect>
+        </StyledForm >
     );
 };
 

@@ -1,6 +1,5 @@
 
-import { Main } from "./MainFiles/MainMenu/styled";
-import { HashRouter, Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LoginPage from "./MainFiles/LoginPage/LoginPage";
 import NewPasswordSite from "./MainFiles/LoginPage/SetNewPasswordPage/NewPasswordSite";
 import ForgetPasswordScreen from "./MainFiles/LoginPage/ForgetPasswordScreen/ForgetPasswordScreen";
