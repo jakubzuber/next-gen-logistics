@@ -27,6 +27,11 @@ app.get('/apiFetchNewOrders', async(req, res) => {
     res.send(result.recordset)
 });
 
+app.get('/apiFetchNewOrdersDetails', async(req, res) => {
+    const result = await dbOperation.getNewOrdersDetailsData(req.body);
+    res.send(result.recordset)
+});
+
 app.get('/fetchClients', async(req, res) => {
     const result = await dbOperation.getClientList(req.body);
     res.send(result.recordset)

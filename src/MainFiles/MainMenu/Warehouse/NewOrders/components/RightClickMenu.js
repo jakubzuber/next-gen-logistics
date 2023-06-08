@@ -4,7 +4,7 @@ import { StyledSelect, StyledForm } from './styled'
 const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
     let menuRef = useRef();
 
-    // useEffect to close contexMenu on click outside container
+// useEffect to close contexMenu on click outside container
     useEffect(() => {
         let handler = (e) => {
             if (!menuRef.current.contains(e.target)) {
@@ -17,7 +17,7 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
         }
     }, [closeContexMenu]);
 
-    // upade on database - set wh worder to order
+// upade on database - set wh worder to order
     const setWorkerToOrder = async ({id, worker}) => {
         if (worker === null || worker === "") {
             return
@@ -49,7 +49,7 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
                 onChange={({ target }) => setWorkerToOrder({worker: target.value, id})}
                 defaultValue=""
             >
-                <option value="" >Wybierz magazyniera</option>
+                <option key={0} value="" >Wybierz magazyniera</option>
                 {whWorker.map(worker => (
                     <option key={worker.ID} value={worker.ID}>{worker.SYMBOL}</option>
                 ))}

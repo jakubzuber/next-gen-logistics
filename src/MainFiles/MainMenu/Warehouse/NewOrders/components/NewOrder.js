@@ -7,12 +7,12 @@ import { StyledNewDataContainer } from './styled'
 
 
 const NewOrder = ({ modal, closeModal, clients }) => {
-    // error hendler
+// error hendler
     const [status, setStatus] = useState(false);
     const [type, setType] = useState("");
     const [title, setTitle] = useState("");
 
-    // excel functions 
+// excel functions 
     const [data, setData] = useState([]);
 
     const handleFileUpload = (e) => {
@@ -28,7 +28,7 @@ const NewOrder = ({ modal, closeModal, clients }) => {
         };
     };
 
-    // sending new order to database functions
+// sending new order to database functions
     const [selectedClient, setSelectedClient] = useState();
 
     const sendNewOrder = async (newOrder, data) => {
@@ -69,6 +69,8 @@ const NewOrder = ({ modal, closeModal, clients }) => {
                 dane: data[0].DANE_AUTA
             }
             sendNewOrder(newOrder, data)
+            onClose()
+            window.location.reload(false);
         }
     };
 

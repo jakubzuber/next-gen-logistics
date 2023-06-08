@@ -38,7 +38,29 @@ const getNewOrdersData = async () => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
-        SELECT * FROM PRZYJECIA1
+        SELECT
+        K.NAZWA KLIENT_NAZWA,
+        P.* 
+        FROM PRZYJECIA1 P CROSS APPLY
+				(
+				SELECT TOP 1
+				K.NAZWA
+				FROM KLIENCI K
+				WHERE K.ID = P.KLIENT_ID
+				) K
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const getNewOrdersDetailsData = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT * FROM PRZYJECIA_SZCZEGOLY
         `)
         return data
     }
@@ -51,7 +73,7 @@ const getClientList = async () => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
-        SELECT ID, SYMBOL FROM KLIENCI
+        SELECT * FROM KLIENCI
         `)
         return data
     }
@@ -133,5 +155,6 @@ module.exports = {
     getClientList,
     setNewOrder,
     getWhWorkers,
-    setWorkerToOrder
+    setWorkerToOrder,
+    getNewOrdersDetailsData
 };

@@ -4,6 +4,9 @@ import NewOrder from "./components/NewOrder";
 import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
 import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons, Tr } from "./styled";
 import RightClickMenu from "./components/RightClickMenu";
+import LeftClickMenu from "./components/LeftClickMenu";
+import { fetchNewOrdersDetails } from "./newOrdersDetailsSlice";
+import { fetchClients } from "./clientsSlice";
 
 const NewOrders = () => {
     const dispatch = useDispatch();
@@ -11,9 +14,28 @@ const NewOrders = () => {
 
     useEffect(() => {
         dispatch(fetchNewOrders())
+        dispatch(fetchNewOrdersDetails())
+        dispatch(fetchClients())
     }, [dispatch])
 
-    // modal functions (new Order functions)
+// modal functions (detals of order)
+    const initialDetails = {
+        show: false,
+        orderId: null,
+        clientId: null
+    };
+
+    const [details, setDetails] = useState(initialDetails);
+
+    const openDetials = ({orderId, clientId}) => {
+        setDetails({show: true, orderId: orderId, clientId: clientId})
+    };
+
+    const closeDetils = () => {
+        setDetails({show: false, id: null})
+    };
+
+// modal functions (new Order functions)
 
     const [modal, setModal] = useState(false);
     const [clients, setClients] = useState([]);
@@ -51,7 +73,7 @@ const NewOrders = () => {
         setModal(false)
     };
 
-    // contex menu functions (assian wh worker functions)
+// contex menu functions (assign wh worker functions)
 
     const initalContexMenu = {
         show: false,
@@ -86,7 +108,7 @@ const NewOrders = () => {
                 <Thead>
                     <tr>
                         <Th>ID</Th>
-                        <Th>KLIENT_ID</Th>
+                        <Th>KLIENT</Th>
                         <Th>NR_WLASNY</Th>
                         <Th>ILOSC</Th>
                         <Th>WAGA</Th>
@@ -103,11 +125,12 @@ const NewOrders = () => {
                 <tbody>
                     {newOrders.map(orders => (
                         <Tr
-                            onContextMenu={(e) => { handleContexMenu({ e, id: orders.ID }) }}
+                            onContextMenu={(e) => { handleContexMenu({ e, id: orders.ID })}}
+                            onClick={() => openDetials({orderId: orders.ID, clientId: orders.KLIENT_ID})}
                             key={orders.ID}
                         >
                             <Td>{orders.ID}</Td>
-                            <Td>{orders.KLIENT_ID}</Td>
+                            <Td>{orders.KLIENT_NAZWA}</Td>
                             <Td>{orders.NR_WLASNY}</Td>
                             <Td>{orders.ILOSC}</Td>
                             <Td>{orders.WAGA}</Td>
@@ -124,6 +147,7 @@ const NewOrders = () => {
                 </tbody>
             </Table>
             <NewOrder modal={modal} closeModal={closeModal} clients={clients} />
+            <LeftClickMenu modal={details} closeModal={closeDetils} />
         </div>
     );
 };
