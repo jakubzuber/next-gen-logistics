@@ -154,7 +154,6 @@ const setWorkerToOrder = async (data) => {
 };
 
 const clearWorkerFromOrder = async (data) => {
-    console.log(data.idOrder)
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
@@ -169,6 +168,22 @@ const clearWorkerFromOrder = async (data) => {
     };
 };
 
+const deleteOrder = async (data) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        delete from PRZYJECIA1
+        where ID = ${data.idOrder}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+
+
+
 
 
 module.exports = {
@@ -180,5 +195,6 @@ module.exports = {
     getWhWorkers,
     setWorkerToOrder,
     getNewOrdersDetailsData,
-    clearWorkerFromOrder
+    clearWorkerFromOrder,
+    deleteOrder
 };

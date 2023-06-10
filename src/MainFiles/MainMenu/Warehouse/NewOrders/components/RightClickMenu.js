@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { selectNewOrders } from "../newOrdersSlice";
-import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
 import { StyledSelect, StyledForm, RightClickButton } from './styled'
 
 const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
@@ -59,7 +57,7 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
 
      // upade on database - delete order
      const deleteOrder = async ( id ) => {
-            await fetch('/clearWorkerFromOrder', {
+            await fetch('/deleteOrder', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -80,7 +78,6 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
                 y={y}
             >
                 <StyledSelect
-                    required
                     onChange={({ target }) => setWorkerToOrder({ worker: target.value, id })}
                     defaultValue=""
                 >
@@ -89,7 +86,7 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
                         <option key={worker.ID} value={worker.ID}>{worker.SYMBOL}</option>
                     ))}
                 </StyledSelect>
-                <RightClickButton>Usuń zlecenie</RightClickButton>
+                <RightClickButton onClick={() => deleteOrder(id)}>Usuń zlecenie</RightClickButton>
                 <RightClickButton onClick={() => clearWorkerFromOrder(id)}>Usuń magazyniera</RightClickButton>
             </StyledForm >
     );
