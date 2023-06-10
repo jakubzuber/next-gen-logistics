@@ -52,5 +52,10 @@ app.post('/setWorkerToOrder', async(req,res) => {
     res.status(200).json({ success: true })
 });
 
+app.post('/clearWorkerFromOrder', async(req,res) => {
+    dbOperation.clearWorkerFromOrder(req.body)
+    res.status(200).json({ success: true })
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

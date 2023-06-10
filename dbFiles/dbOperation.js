@@ -40,7 +40,20 @@ const getNewOrdersData = async () => {
         let data = await pool.request().query(`
         SELECT
         K.NAZWA KLIENT_NAZWA,
-        P.* 
+		concat(convert(varchar, P.OBSLUGA_START, 32),' ', convert(varchar, P.OBSLUGA_START, 24)) OBSLUGA_START,
+		concat(convert(varchar, P.OBSLUGA_KONIEC, 32),' ', convert(varchar, P.OBSLUGA_KONIEC, 24)) OBSLUGA_KONIEC,
+		P.ID,
+		KLIENT_ID,
+		ILOSC,
+		WAGA,
+		NADAWCA,
+		KOD_POCZTOWY,
+		MIEJSCOWOSC,
+		ADRES,
+		KRAJ,
+		UWAGI,
+		DANE_AUTA,
+		OBSLUGA
         FROM PRZYJECIA1 P CROSS APPLY
 				(
 				SELECT TOP 1
@@ -95,13 +108,7 @@ const getWhWorkers = async () => {
     };
 };
 
-var format = require('pg-format');
-
 const setNewOrder = async ({ newOrder, data }) => {
-    //console.log(format('INSERT INTO test_table (id, name) VALUES %L', data));
-    //console.log(data)
-    //data.map(a => console.log(a.KOD_PRODUKTU))
-    //onsole.log(`INSERT INTO PRZYJECIA_SZCZEGOLY (KOD_PRODUKTU, NAZWA_PRODUKTU) VALUES ${data.map(a => `(${a.KOD_PRODUKTU}, ${a.NAZWA_PRODUKTU})`)} `)
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
@@ -146,6 +153,22 @@ const setWorkerToOrder = async (data) => {
     };
 };
 
+const clearWorkerFromOrder = async (data) => {
+    console.log(data.idOrder)
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        update PRZYJECIA1
+        set OBSLUGA = null,
+            OBSLUGA_START = null
+        where ID = ${data.idOrder}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
 
 
 module.exports = {
@@ -156,5 +179,6 @@ module.exports = {
     setNewOrder,
     getWhWorkers,
     setWorkerToOrder,
-    getNewOrdersDetailsData
+    getNewOrdersDetailsData,
+    clearWorkerFromOrder
 };

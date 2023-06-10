@@ -1,10 +1,12 @@
-import { useEffect, useRef } from "react";
-import { StyledSelect, StyledForm } from './styled'
+import { useEffect, useRef, useState } from "react";
+import { selectNewOrders } from "../newOrdersSlice";
+import { useSelector } from "react-redux";
+import { StyledSelect, StyledForm, RightClickButton } from './styled'
 
 const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
     let menuRef = useRef();
 
-// useEffect to close contexMenu on click outside container
+    // useEffect to close contexMenu on click outside container
     useEffect(() => {
         let handler = (e) => {
             if (!menuRef.current.contains(e.target)) {
@@ -17,8 +19,8 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
         }
     }, [closeContexMenu]);
 
-// upade on database - set wh worder to order
-    const setWorkerToOrder = async ({id, worker}) => {
+    // upade on database - set wh worder to order
+    const setWorkerToOrder = async ({ id, worker }) => {
         if (worker === null || worker === "") {
             return
         } else {
@@ -38,23 +40,58 @@ const RightClickMenu = ({ x, y, closeContexMenu, whWorker, id }) => {
         }
     };
 
+     // upade on database - clear wh wokrer 
+    const clearWorkerFromOrder = async ( id ) => {
+        console.log(id)
+            await fetch('/clearWorkerFromOrder', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    idOrder: id
+                })
+            })
+            closeContexMenu();
+            window.location.reload(false);
+    };
+
+     // upade on database - delete order
+     const deleteOrder = async ( id ) => {
+            await fetch('/clearWorkerFromOrder', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    idOrder: id
+                })
+            })
+            closeContexMenu();
+            window.location.reload(false);
+    };
+
     return (
-        <StyledForm
-            ref={menuRef}
-            x={x}
-            y={y}
+            <StyledForm
+                ref={menuRef}
+                x={x}
+                y={y}
             >
-            <StyledSelect
-                required
-                onChange={({ target }) => setWorkerToOrder({worker: target.value, id})}
-                defaultValue=""
-            >
-                <option key={0} value="" >Wybierz magazyniera</option>
-                {whWorker.map(worker => (
-                    <option key={worker.ID} value={worker.ID}>{worker.SYMBOL}</option>
-                ))}
-            </StyledSelect>
-        </StyledForm >
+                <StyledSelect
+                    required
+                    onChange={({ target }) => setWorkerToOrder({ worker: target.value, id })}
+                    defaultValue=""
+                >
+                    <option key={0} value="" >Wybierz magazyniera</option>
+                    {whWorker.map(worker => (
+                        <option key={worker.ID} value={worker.ID}>{worker.SYMBOL}</option>
+                    ))}
+                </StyledSelect>
+                <RightClickButton>Usuń zlecenie</RightClickButton>
+                <RightClickButton onClick={() => clearWorkerFromOrder(id)}>Usuń magazyniera</RightClickButton>
+            </StyledForm >
     );
 };
 

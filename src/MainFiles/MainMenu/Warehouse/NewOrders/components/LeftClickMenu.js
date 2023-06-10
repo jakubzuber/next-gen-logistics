@@ -1,10 +1,10 @@
 import { selectNewOrders } from "../newOrdersSlice";
 import { useSelector } from "react-redux";
 import Popup from "reactjs-popup";
-import { Topic } from "../styled";
+import { Table, Topic } from "../styled";
 import { StyledNewDataContainer } from './styled'
 import { selectNewOrdersDetails } from "../newOrdersDetailsSlice";
-import { selectClients } from "../clientsSlice";
+import { selectClients } from "../../../Slices/clientsSlice";
 
 const LeftClickMenu = ({ modal, closeModal }) => {
     const { newOrders } = useSelector(selectNewOrders);
@@ -21,7 +21,7 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', color: 'white', minWidth: '800px' }}>
                     <div>
                         <p>Dane klienta:</p>
-                        <table>
+                        <Table>
                             {clients.filter(clients => clients.ID === modal.clientId).map(client => (
                                 <tbody>
                                     <tr>
@@ -38,11 +38,11 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                                     </tr>
                                 </tbody>
                             ))}
-                        </table>
+                        </Table>
                     </div>
                     <div>
                         <p>Szczególy obsługi:</p>
-                        <table>
+                        <Table>
                             {newOrders.filter(newOrders => newOrders.ID === modal.orderId).map(order => (
                                 <tbody key={order.ID}>
                                     <tr>
@@ -59,11 +59,11 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                                     </tr>
                                 </tbody>
                             ))}
-                        </table>
+                        </Table>
                     </div>
                     <div>
                         <p>Dane dostawcy:</p>
-                        <table>
+                        <Table>
                             {newOrders.filter(newOrders => newOrders.ID === modal.orderId).map(order => (
                                 <tbody key={order.ID}>
                                     <tr>
@@ -80,7 +80,7 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                                     </tr>
                                 </tbody>
                             ))}
-                        </table>
+                        </Table>
                     </div>
                     <div>
                         <p>Szczegóły operacji:</p>
@@ -88,7 +88,7 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                             {newOrdersDetails.filter(newOrdersDetails => newOrdersDetails.PRZYJECIE_ID === modal.orderId).map(orderDetails => (
                                 <>
                                     <li key={orderDetails.ID}>
-                                        {orderDetails.ILOSC}szt. {orderDetails.NAZWA_PRODUKTU}({orderDetails.KOD_PRODUKTU} ) // {orderDetails.WAGA}kg
+                                        {orderDetails.ILOSC}szt. {orderDetails.NAZWA_PRODUKTU} ({orderDetails.KOD_PRODUKTU} ) // {orderDetails.WAGA}kg
                                     </li>
                                 </>
                             ))}

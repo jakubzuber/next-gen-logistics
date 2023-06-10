@@ -6,7 +6,7 @@ import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons, Tr } from "
 import RightClickMenu from "./components/RightClickMenu";
 import LeftClickMenu from "./components/LeftClickMenu";
 import { fetchNewOrdersDetails } from "./newOrdersDetailsSlice";
-import { fetchClients } from "./clientsSlice";
+import { fetchClients } from "../../Slices/clientsSlice";
 
 const NewOrders = () => {
     const dispatch = useDispatch();
