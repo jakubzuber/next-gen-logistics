@@ -181,10 +181,18 @@ const deleteOrder = async (data) => {
     };
 };
 
-
-
-
-
+const getWhPlaces =  async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        select * from WH_PLACES
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
 
 module.exports = {
     validateLogIn,
@@ -196,5 +204,6 @@ module.exports = {
     setWorkerToOrder,
     getNewOrdersDetailsData,
     clearWorkerFromOrder,
-    deleteOrder
+    deleteOrder,
+    getWhPlaces
 };

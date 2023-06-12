@@ -12,6 +12,8 @@ import Invoices from "./MainFiles/MainMenu/Accounting/Invoices/Invoices";
 import ToInvoice from "./MainFiles/MainMenu/Accounting/ToInvoice/ToInvoice";
 import Clients from "./MainFiles/MainMenu/Administration/Clients/Clients";
 import Users from "./MainFiles/MainMenu/Administration/Users/Users";
+import WhPlaces from "./MainFiles/MainMenu/Administration/WhPlaces/WhPlaces";
+import WhCarriers from "./MainFiles/MainMenu/Administration/WhCarriers/WhCarriers";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="to-invoice" element={<ToInvoice />} />
         <Route path="clients" element={<Clients />} />
         <Route path="users" element={<Users />} />
+        <Route path="whplaces" element={<WhPlaces />} />
+        <Route path="wh-carriers" element={<WhCarriers />} />
       </Route>
     </Routes>
   )

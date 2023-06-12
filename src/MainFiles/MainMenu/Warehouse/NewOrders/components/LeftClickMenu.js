@@ -1,7 +1,7 @@
 import { selectNewOrders } from "../newOrdersSlice";
 import { useSelector } from "react-redux";
 import Popup from "reactjs-popup";
-import { Table, Topic } from "../styled";
+import { Table, Topic } from "../../../styled";
 import { StyledNewDataContainer } from './styled'
 import { selectNewOrdersDetails } from "../newOrdersDetailsSlice";
 import { selectClients } from "../../../Slices/clientsSlice";

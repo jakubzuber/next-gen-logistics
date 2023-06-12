@@ -15,6 +15,8 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import HorizontalSplitIcon from '@mui/icons-material/HorizontalSplit';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 
 const MainMenu = () => {
 
@@ -45,6 +47,8 @@ const MainMenu = () => {
                         <StyledSubMenu style={{backgroundColor: 'transparent'}} icon={<SettingsApplicationsIcon />} label="Administracja">
                             <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={< PersonOutlineIcon />} component={<Link to='users' />}>Użytkownicy</StyledMenuItem>
                             <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<AssignmentIndIcon />} component={<Link to='clients' />}>Klienci</StyledMenuItem>
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<HorizontalSplitIcon />} component={<Link to='whplaces' />}>Miejsca Mag.</StyledMenuItem>
+                            <StyledMenuItem style={{backgroundColor: 'transparent'}} icon={<IndeterminateCheckBoxIcon />} component={<Link to='wh-carriers' />}>Nośniki</StyledMenuItem>
                         </StyledSubMenu>
                     </Menu>
                 </nav>

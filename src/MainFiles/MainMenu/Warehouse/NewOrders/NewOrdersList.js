@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NewOrder from "./components/NewOrder";
 import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
-import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons, Tr } from "./styled";
+import { Table, Topic, Thead, Td, Th, StyledButton, FunctionButtons, Tr } from "../../styled";
 import RightClickMenu from "./components/RightClickMenu";
 import LeftClickMenu from "./components/LeftClickMenu";
 import { fetchNewOrdersDetails } from "./newOrdersDetailsSlice";

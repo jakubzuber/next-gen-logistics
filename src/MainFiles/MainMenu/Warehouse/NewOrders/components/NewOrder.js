@@ -2,7 +2,7 @@ import { useState } from "react";
 import ReactJsAlert from "reactjs-alert";
 import Popup from "reactjs-popup";
 import * as XLSX from "xlsx";
-import { Table, Thead, Td, Topic, StyledInput, ButtonContainer, NewOrderButton } from "../styled";
+import { Table, Thead, Td, Topic, StyledInput, ButtonContainer, NewOrderButton } from "../../../styled";
 import { StyledNewDataContainer } from './styled'
 
 
