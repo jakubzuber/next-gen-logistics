@@ -62,9 +62,19 @@ app.post('/deleteOrder', async(req,res) => {
     res.status(200).json({ success: true })
 });
 
+app.post('/setNewPlaces', async(req,res) => {
+    dbOperation.setNewPlaces(req.body)
+    res.status(200).json({ success: true })
+});
+
 app.get('/apiGetWhPlaces', async(req,res) => {
     const result = await dbOperation.getWhPlaces(req.body)
     res.send(result.recordset)
+});
+
+app.post('/deletePlace', async(req,res) => {
+    dbOperation.deletePlace(req.body)
+    res.status(200).json({ success: true })
 });
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))

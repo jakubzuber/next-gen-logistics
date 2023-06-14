@@ -44,3 +44,20 @@ export const Input = styled.input`
     padding: 10px;
     margin: 5px;
 `;
+
+export const StyledForm = styled.form`
+    position: absolute;
+    width: 10%;
+    height: 6%;
+    padding: 2px;
+    z-index: 2;
+    top: ${props => props.y}px;
+    left: ${props => props.x}px;
+    background-color: #7c81dd;
+    display: grid;
+`;
+
+export const RightClickButton = styled.button`
+    font-weight: 300;
+    height: 25px;
+`;

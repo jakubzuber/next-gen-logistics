@@ -1,7 +1,7 @@
 import Popup from "reactjs-popup";
 import { Minus, Plus, StyledNewDataContainer, GridContainer, Input } from "./styled";
 import { useState } from "react";
-import { NewOrderButton, ButtonContainer } from "../../../styled";
+import { NewOrderButton, ButtonContainer, FromSubmitButton } from "../../../styled";
 
 const NewWhPlace = ({ modal, closeModal }) => {
     const [places, setPlaces] = useState(1);
@@ -102,20 +102,34 @@ const NewWhPlace = ({ modal, closeModal }) => {
         }
     };
 
+    const sendNewPlacesToDatabase = async(data) => {
+        await fetch('/setNewPlaces', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                data: data
+            })
+        })
+    };
+
     const onAccept = () => {
         const allData = [
-            { symbol0, discription0 },
-            { symbol1, discription1 },
-            { symbol2, discription2 },
-            { symbol3, discription3 },
-            { symbol4, discription4 },
-            { symbol5, discription5 },
-            { symbol6, discription6 },
-            { symbol7, discription7 },
-            { symbol8, discription8 },
-            { symbol9, discription9 },
+            { symbol: symbol0, discription: discription0 },
+            { symbol: symbol1, discription: discription1 },
+            { symbol: symbol2, discription: discription2 },
+            { symbol: symbol3, discription: discription3 },
+            { symbol: symbol4, discription: discription4 },
+            { symbol: symbol5, discription: discription5 },
+            { symbol: symbol6, discription: discription6 },
+            { symbol: symbol7, discription: discription7 },
+            { symbol: symbol8, discription: discription8 },
+            { symbol: symbol9, discription: discription9 },
         ];
         const dataToUpload = allData.slice(0, places)
+        sendNewPlacesToDatabase(dataToUpload)
     };
 
     return (
@@ -128,15 +142,15 @@ const NewWhPlace = ({ modal, closeModal }) => {
                         <Plus onClick={() => addPlace()}>+</Plus>
                         <Minus onClick={() => minusPlace()}>-</Minus>
                     </GridContainer>
-                    <form>
+                    <form onSubmit={onAccept} >
                         {Array.from({ length: places }).map((v, i) =>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-                                <Input required onChange={({ target }) => assignSymbolFunction({ value: target.value, index: i })} placeholder="SYMBOL"></Input>
-                                <Input required onChange={({ target }) => assignDiscryptionFunction({ value: target.value, index: i })} placeholder="OPIS"></Input>
+                                <Input name="123" minLength={9} maxLength={9} required onChange={({ target }) => assignSymbolFunction({ value: target.value, index: i })} placeholder="SYMBOL"></Input>
+                                <Input name="321" required onChange={({ target }) => assignDiscryptionFunction({ value: target.value, index: i })} placeholder="OPIS"></Input>
                             </div>
                         )}
                         <ButtonContainer>
-                            <NewOrderButton onClick={() => onAccept()} >Zaakceptuj</NewOrderButton>
+                            <FromSubmitButton type="submit" value='Dodaj'></FromSubmitButton>
                             <NewOrderButton onClick={() => onClose()}>Anuluj</NewOrderButton>
                         </ButtonContainer>
                     </form>

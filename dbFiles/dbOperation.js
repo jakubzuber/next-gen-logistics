@@ -194,6 +194,36 @@ const getWhPlaces =  async () => {
     };
 };
 
+const setNewPlaces = async ({ data }) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+
+        INSERT INTO WH_PLACES (KOD_KRESKOWY, OPIS, KOD) VALUES 
+        ${data.map(a => `('${a.symbol}', '${a.discription}', CONCAT('${a.symbol}',333))`)}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    }
+};
+
+const deletePlace = async (data) => {
+    console.log(data)
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        delete from WH_PLACES
+        where ID = ${data.idPlace}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+
+
 module.exports = {
     validateLogIn,
     setNewPasswrod,
@@ -205,5 +235,7 @@ module.exports = {
     getNewOrdersDetailsData,
     clearWorkerFromOrder,
     deleteOrder,
-    getWhPlaces
+    getWhPlaces,
+    setNewPlaces,
+    deletePlace
 };

@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWhPlaces, selectWhPlaces } from "./whPlacesSlice";
-import { Table, Thead, Td, FunctionButtons, Th, StyledButton } from "../../styled";
+import { FunctionButtons, StyledButton } from "../../styled";
 import NewWhPlace from "./components/NewWhPlace";
+
+import { MaterialReactTable } from 'material-react-table';
+import { MenuItem } from '@mui/material';
+import { MRT_Localization_PL } from 'material-react-table/locales/pl'
 
 const WhPlaces = () => {
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
+    const [rowSelection, setRowSelection] = useState({});
     const { whPlaces } = useSelector(selectWhPlaces);
 
     useEffect(() => {
@@ -21,32 +26,71 @@ const WhPlaces = () => {
         setModal(false)
     };
 
+    const columns = useMemo(
+        () => [
+          {
+            accessorKey: 'ID', //access nested data with dot notation
+            header: 'Id',
+            size: 50,
+          },
+          {
+            accessorKey: 'KOD_KRESKOWY', //normal accessorKey
+            header: 'Kod',
+            size: 150,
+          },
+          {
+            accessorKey: 'OPIS',
+            header: 'Opis',
+            size: 300,
+          },
+          {
+            accessorKey: 'KOD',
+            header: 'Kod kreskowy',
+            size: 150,
+          },
+        ],
+        [],
+      );
+
+      const deletePlace = async ( id ) => {
+        console.log(id)
+        await fetch('/deletePlace', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                idPlace: id
+            })
+        })
+        window.location.reload(false);
+    };
+
     return (
         <div>
             <FunctionButtons>
                 <StyledButton
-                onClick={() => toggleModal()}>
+                    onClick={() => toggleModal()}>
                     Nowe miejsca składowe
                 </StyledButton>
             </FunctionButtons>
-            <Table>
-                <Thead>
-                    <tr>
-                        <Th>ID</Th>
-                        <Th>SYMBOL</Th>
-                        <Th>OPIS</Th>
-                    </tr>
-                </Thead>
-                <tbody>
-                    {whPlaces.map(place => (
-                        <tr key={place.ID}>
-                            <Td>{place.ID}</Td>
-                            <Td>{place.KOD_KRESKOWY}</Td>
-                            <Td>{place.OPIS}</Td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+            <MaterialReactTable 
+            columns={columns} 
+            data={whPlaces} 
+            localization={MRT_Localization_PL} 
+            enableRowSelection
+            onRowSelectionChange={setRowSelection}
+            state={{ rowSelection }}
+            enableRowActions 
+            renderRowActionMenuItems={({ row }) => [
+                <MenuItem key="edit" onClick={() => console.info()}>
+                    Edit
+                </MenuItem>,
+                <MenuItem key="Usuń" onClick={() =>deletePlace(row.original.ID)}>
+                    Delete
+                </MenuItem>,
+            ]} />
             <NewWhPlace modal={modal} closeModal={closeModal} />
         </div>
     );

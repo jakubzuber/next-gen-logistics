@@ -126,9 +126,24 @@ export const ButtonContainer = styled.div`
 
 export const NewOrderButton = styled.div`
     transition-duration: 300ms;
+    font-weight: 500;
 
     :hover {
      color: #9e9fac;
      cursor: pointer;
     }
+`;
+
+export const FromSubmitButton = styled.input`
+    transition-duration: 300ms;
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+
+    :hover {
+        color: #9e9fac;
+        cursor: pointer;
+}
 `;
