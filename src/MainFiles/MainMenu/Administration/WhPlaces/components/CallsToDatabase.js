@@ -1,4 +1,5 @@
-export const deletePlace = async (id) => {
+export const deletePlace = async (props) => {
+    console.log(props)
     await fetch('/deletePlace', {
         method: 'POST',
         headers: {
@@ -6,9 +7,8 @@ export const deletePlace = async (id) => {
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            idPlace: id
+            idPlace: props
         })
     })
-    closeContexMenu();
     window.location.reload(false);
 };
