@@ -12,13 +12,14 @@ export const StyledNewDataContainer = styled.div`
 export const StyledForm = styled.form`
     position: absolute;
     width: 10%;
-    height: 10%;
     z-index: 2;
     top: ${props => props.y}px;
     left: ${props => props.x}px;
-    background-color: #7c81dd;
     display: grid;
     grid-template-columns: 1fr;
+    padding: 10px;
+    background-color: white;
+    border-radius: 2px;
 `;
 
 export const StyledSelect = styled.select`
@@ -29,10 +30,12 @@ export const StyledSelect = styled.select`
     font-size: 14px;
     font-weight: 300;
     margin-bottom: 1px;
+    background-color: transparent;
 
     :hover {
-        background-color: #f0ecec;
-    };
+        background-color: #272953;
+        color: white;
+    }
 `;
 
 export const RightClickButton = styled.button`
@@ -40,4 +43,11 @@ export const RightClickButton = styled.button`
     margin-top: 2px;
     padding: 5px;
     height: 30px;
+    border: none;
+    background-color: transparent;
+
+    :hover {
+        background-color: #272953;
+        color: white;
+    }
 `;

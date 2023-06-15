@@ -1,4 +1,4 @@
-/*eslint eqeqeq: "off"*/
+/* eslint-disable */
 import styled from "styled-components";
 import { MenuItem, SubMenu } from 'react-pro-sidebar';
 
@@ -16,7 +16,7 @@ export const MainContent = styled.div`
 `;
 
 export const StyledMenuItem = styled(MenuItem)`
-    background-color: #272953;
+    background-color: #181c66;
     transition-duration: 300ms ;
 
     :hover {
@@ -74,7 +74,7 @@ export const Tr = styled.tr`
     transition-duration: 300ms ;
 
     :hover {
-        background-color: #272953;
+        background-color: #181c66;
         cursor: pointer;
     }
 `;

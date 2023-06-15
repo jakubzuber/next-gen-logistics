@@ -209,7 +209,6 @@ const setNewPlaces = async ({ data }) => {
 };
 
 const deletePlace = async (data) => {
-    console.log(data)
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
@@ -221,6 +220,20 @@ const deletePlace = async (data) => {
         console.log(error)
     };
 };
+
+const getWhCarriers =  async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        select * from WH_CARRIERS
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
 
 
 
@@ -237,5 +250,6 @@ module.exports = {
     deleteOrder,
     getWhPlaces,
     setNewPlaces,
-    deletePlace
+    deletePlace,
+    getWhCarriers
 };

@@ -20,7 +20,7 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 
 const MainMenu = () => {
 
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
 
     const onClickMenuIcon = () => {
         setCollapsed(!collapsed);
@@ -29,7 +29,7 @@ const MainMenu = () => {
     return (
         <Main collapsed={collapsed}>
             <Sidebar
-                backgroundColor="#272953"
+                backgroundColor="#181c66"
                 style={{ height: '100vh' }} collapsed={collapsed}>
                 <nav>
                     <ViewHeadlineIcon onClick={onClickMenuIcon} />
@@ -45,7 +45,7 @@ const MainMenu = () => {
                             <StyledMenuItem style={{ backgroundColor: 'transparent' }} icon={<NoteAddIcon />} component={<Link to='to-invoice' />}>Fv do wystawienia</StyledMenuItem>
                         </StyledSubMenu>
                         <StyledSubMenu style={{ backgroundColor: 'transparent' }} icon={<SettingsApplicationsIcon />} label="Administracja">
-                            <StyledMenuItem onClick={() =>setCollapsed(true)} style={{ backgroundColor: 'transparent' }} icon={< PersonOutlineIcon />} component={<Link to='users' />}>Użytkownicy</StyledMenuItem>
+                            <StyledMenuItem style={{ backgroundColor: 'transparent' }} icon={< PersonOutlineIcon />} component={<Link to='users' />}>Użytkownicy</StyledMenuItem>
                             <StyledMenuItem style={{ backgroundColor: 'transparent' }} icon={<AssignmentIndIcon />} component={<Link to='clients' />}>Klienci</StyledMenuItem>
                             <StyledMenuItem style={{ backgroundColor: 'transparent' }} icon={<HorizontalSplitIcon />} component={<Link to='whplaces' />}>Miejsca Mag.</StyledMenuItem>
                             <StyledMenuItem style={{ backgroundColor: 'transparent' }} icon={<IndeterminateCheckBoxIcon />} component={<Link to='wh-carriers' />}>Nośniki</StyledMenuItem>
