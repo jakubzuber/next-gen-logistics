@@ -209,7 +209,7 @@ const NewOrders = () => {
                                 <MRT_FullScreenToggleButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
                             </Box>
                         </Toolbar>
-                        <Box sx={{ display: 'grid', width: '100%' }}>
+                        <Box sx={{ width: '100%' }}>
                             <MRT_ToolbarAlertBanner
                                 stackAlertBanner
                                 table={tableInstanceRef.current}
@@ -225,6 +225,7 @@ const NewOrders = () => {
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
                     enableRowSelection
+                    enableColumnResizing
                     muiTableBodyRowProps={({ row }) => ({
                         onClick: () => { openDetials({ orderId: row.original.ID, clientId: row.original.KLIENT_ID }) },
                         hover: false,
@@ -240,6 +241,8 @@ const NewOrders = () => {
                     muiTableHeadCellFilterTextFieldProps={{ sx: { backgroundColor: 'white', borderRadius: '7px', padding: '2px' } }}
                     enableRowActions
                     positionActionsColumn={'last'}
+                    displayColumnDefOptions={{ }}
+                    options={{actionsCellStyle: {display:"flex", justifyContent: "center", backgroundColor: 'red'}}}
                     renderRowActionMenuItems={({ row }) => [
                         <MenuItem sx={{justifyContent: 'center'}} key="wydrukuj" onClick={() => clearWorkerFromOrder(row.original.ID)}>
                             Usuń magazyniera

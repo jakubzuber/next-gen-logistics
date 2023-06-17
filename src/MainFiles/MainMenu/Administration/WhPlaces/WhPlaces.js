@@ -5,7 +5,7 @@ import { fetchWhPlaces, selectWhPlaces } from "./whPlacesSlice";
 import { deletePlace } from './components/CallsToDatabase'
 import NewWhPlace from "./components/NewWhPlace";
 import { FunctionButtons, StyledButton, Topic } from "../../styled";
-import { MenuItem } from "@mui/material";
+import { MenuItem, Box, Toolbar  } from "@mui/material";
 import { MRT_Localization_PL } from 'material-react-table/locales/pl';
 import {
     MaterialReactTable,
@@ -17,7 +17,7 @@ import {
     MRT_ToggleFiltersButton,
     MRT_ToolbarAlertBanner,
 } from 'material-react-table';
-import { Box, Toolbar, } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 
 const WhPlaces = () => {
     const dispatch = useDispatch();
@@ -128,6 +128,7 @@ const WhPlaces = () => {
                     muiTableHeadCellColumnActionsButtonProps={{ sx: { color: 'white' } }}
                     muiTableHeadCellFilterTextFieldProps={{ sx: { backgroundColor: 'white', borderRadius: '7px', padding: '2px' } }}
                     enableRowActions
+                    enableColumnResizing
                     positionActionsColumn={'last'}
                     renderRowActionMenuItems={({ row }) => [
                             <MenuItem key="wydrukuj" onClick={() => console.info('Edit')}>
@@ -135,7 +136,7 @@ const WhPlaces = () => {
                             </MenuItem>,
                             <MenuItem key="usun" onClick={() => deletePlace(row.original.ID)}>
                                 Usuń
-                            </MenuItem>,
+                            </MenuItem>
                     ]}
                     enableRowSelection
                     enableTopToolbar={false}

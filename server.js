@@ -87,5 +87,10 @@ app.post('/postNewCarrier', async(req,res) => {
     res.status(200).json({ success: true })
 });
 
+app.post('/deleteCarrier', async(req,res) => {
+    dbOperation.deleteCarrier(req.body)
+    res.status(200).json({ success: true })
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

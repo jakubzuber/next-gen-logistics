@@ -1,13 +1,12 @@
 export const deleteCarrier = async (props) => {
-    console.log(props)
-    await fetch('/deletePlace', {
+    await fetch('/deleteCarrier', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            idPlace: props
+            idCarrier: props
         })
     })
     window.location.reload(false);

@@ -253,6 +253,21 @@ const setNewCarriers = async ({ data }) => {
     }
 };
 
+const deleteCarrier = async (data) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        delete from WH_CARRIERS
+        where ID = ${data.idCarrier}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+
+
 
 module.exports = {
     validateLogIn,
@@ -269,5 +284,6 @@ module.exports = {
     setNewPlaces,
     deletePlace,
     getWhCarriers,
-    setNewCarriers
+    setNewCarriers,
+    deleteCarrier
 };

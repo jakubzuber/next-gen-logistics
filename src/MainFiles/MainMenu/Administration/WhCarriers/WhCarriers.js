@@ -17,6 +17,7 @@ import {
     MRT_ToolbarAlertBanner,
 } from 'material-react-table';
 import { Box, Toolbar, } from '@mui/material';
+import { deleteCarrier } from './components/CallsToDatabase';
 
 
 
@@ -119,12 +120,13 @@ const WhCarriers = () => {
                     muiTableHeadCellColumnActionsButtonProps={{ sx: { color: 'white' } }}
                     muiTableHeadCellFilterTextFieldProps={{ sx: { backgroundColor: 'white', borderRadius: '7px', padding: '2px' } }}
                     enableRowActions
+                    enableColumnResizing
                     positionActionsColumn={'last'}
                     renderRowActionMenuItems={({ row }) => [
                         <MenuItem key="wydrukuj" onClick={() => console.info('Edit')}>
                             Wydrukuj
                         </MenuItem>,
-                        <MenuItem key="usun" onClick={() => console.info('Delete')}>
+                        <MenuItem key="usun" onClick={() => deleteCarrier(row.original.ID)}>
                             Usuń
                         </MenuItem>,
                     ]}
