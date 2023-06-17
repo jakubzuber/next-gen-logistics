@@ -234,7 +234,24 @@ const getWhCarriers =  async () => {
     };
 };
 
-
+const setNewCarriers = async ({ data }) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        declare @counter int = ${data}
+  
+        while @counter > 0
+        begin 
+	        insert into WH_CARRIERS (KOD_KRESKOWY)
+	        values (convert(numeric(12,0),rand() * 899999999999) + 100000000000)
+	        set @counter = @counter - 1
+        end
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    }
+};
 
 
 module.exports = {
@@ -251,5 +268,6 @@ module.exports = {
     getWhPlaces,
     setNewPlaces,
     deletePlace,
-    getWhCarriers
+    getWhCarriers,
+    setNewCarriers
 };

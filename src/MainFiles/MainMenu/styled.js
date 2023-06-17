@@ -65,20 +65,6 @@ export const Thead = styled.thead`
     font-size: 12px;
 `;
 
-export const Th = styled.th`
-    border-bottom: 2px solid #dddddd;
-    text-align: center;
-`;
-
-export const Tr = styled.tr`
-    transition-duration: 300ms ;
-
-    :hover {
-        background-color: #181c66;
-        cursor: pointer;
-    }
-`;
-
 export const Td = styled.td`
     border-bottom: 1px solid #dddddd;
     padding: 5px 0px;
@@ -145,5 +131,22 @@ export const FromSubmitButton = styled.input`
     :hover {
         color: #9e9fac;
         cursor: pointer;
-}
+    }
+`;
+
+export const StyledSelect = styled.select`
+    padding: 5px;
+    background-color: white;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 1px;
+    background-color: transparent;
+    color: #3a3a3b;
+
+    :hover {
+        background-color: #eeeef0;
+        color: #3a3a3b;
+    }
 `;

@@ -1,4 +1,4 @@
-export const deletePlace = async (props) => {
+export const deleteCarrier = async (props) => {
     console.log(props)
     await fetch('/deletePlace', {
         method: 'POST',
@@ -13,8 +13,9 @@ export const deletePlace = async (props) => {
     window.location.reload(false);
 };
 
-export const sendNewPlacesToDatabase = async(data) => {
-    await fetch('/setNewPlaces', {
+
+export const postNewCarriers = async(data) => {
+    await fetch('/postNewCarrier', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',

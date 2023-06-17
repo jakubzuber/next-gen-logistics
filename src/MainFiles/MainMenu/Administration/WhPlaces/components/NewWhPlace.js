@@ -1,6 +1,7 @@
-import Popup from "reactjs-popup";
-import { Minus, Plus, StyledNewDataContainer, GridContainer, Input } from "./styled";
 import { useState } from "react";
+import Popup from "reactjs-popup";
+import { sendNewPlacesToDatabase } from "./CallsToDatabase";
+import { Minus, Plus, StyledNewDataContainer, GridContainer, Input } from "./styled";
 import { NewOrderButton, ButtonContainer, FromSubmitButton } from "../../../styled";
 
 const NewWhPlace = ({ modal, closeModal }) => {
@@ -102,19 +103,6 @@ const NewWhPlace = ({ modal, closeModal }) => {
         }
     };
 
-    const sendNewPlacesToDatabase = async(data) => {
-        await fetch('/setNewPlaces', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                data: data
-            })
-        })
-    };
-
     const onAccept = () => {
         const allData = [
             { symbol: symbol0, discription: discription0 },
@@ -145,8 +133,21 @@ const NewWhPlace = ({ modal, closeModal }) => {
                     <form onSubmit={onAccept} >
                         {Array.from({ length: places }).map((v, i) =>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-                                <Input name="123" minLength={9} maxLength={9} required onChange={({ target }) => assignSymbolFunction({ value: target.value, index: i })} placeholder="SYMBOL"></Input>
-                                <Input name="321" required onChange={({ target }) => assignDiscryptionFunction({ value: target.value, index: i })} placeholder="OPIS"></Input>
+                                <Input 
+                                name="123" 
+                                minLength={9} 
+                                maxLength={9} 
+                                required 
+                                onChange={({ target }) => assignSymbolFunction({ value: target.value, index: i })} 
+                                placeholder="SYMBOL"
+                                >
+                                </Input>
+                                <Input 
+                                name="321" 
+                                required 
+                                onChange={({ target }) => assignDiscryptionFunction({ value: target.value, index: i })} 
+                                placeholder="OPIS"
+                                ></Input>
                             </div>
                         )}
                         <ButtonContainer>

@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const Form = styled.form`
     width: 20%;
-    background-color: #272953;
+    background-color: #181c66;
     margin-top: 25vh;
     border-radius: 5px;
     box-shadow: 1px 1px 10px;

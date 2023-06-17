@@ -20,7 +20,7 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 
 const MainMenu = () => {
 
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
 
     const onClickMenuIcon = () => {
         setCollapsed(!collapsed);
@@ -30,7 +30,7 @@ const MainMenu = () => {
         <Main collapsed={collapsed}>
             <Sidebar
                 backgroundColor="#181c66"
-                style={{ height: '100vh' }} collapsed={collapsed}>
+                style={{ height: '100%', minHeight: '100vh' }} collapsed={collapsed}>
                 <nav>
                     <ViewHeadlineIcon onClick={onClickMenuIcon} />
                     <Menu>

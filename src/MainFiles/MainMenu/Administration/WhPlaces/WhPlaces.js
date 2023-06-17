@@ -1,12 +1,12 @@
 /* eslint-disable */
-import { fetchWhPlaces, selectWhPlaces } from "./whPlacesSlice";
-import { FunctionButtons, StyledButton } from "../../styled";
-import NewWhPlace from "./components/NewWhPlace";
-import { useDispatch, useSelector } from "react-redux";
-import { Menu, MenuItem } from "@mui/material";
-import { MRT_Localization_PL } from 'material-react-table/locales/pl';
 import React, { useReducer, useRef, useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchWhPlaces, selectWhPlaces } from "./whPlacesSlice";
 import { deletePlace } from './components/CallsToDatabase'
+import NewWhPlace from "./components/NewWhPlace";
+import { FunctionButtons, StyledButton, Topic } from "../../styled";
+import { MenuItem } from "@mui/material";
+import { MRT_Localization_PL } from 'material-react-table/locales/pl';
 import {
     MaterialReactTable,
     MRT_FullScreenToggleButton,
@@ -23,13 +23,13 @@ const WhPlaces = () => {
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
     const { whPlaces } = useSelector(selectWhPlaces);
-
+    
     const [rowSelection, setRowSelection] = useState({});
     const tableInstanceRef = useRef(null);
     const rerender = useReducer(() => ({}), {})[1];
     const [columnVisibility, setColumnVisibility] = useState({});
-    const [density, setDensity] = useState('comfortable');
-    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
+    const [density, setDensity] = useState('compact');
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
     const [showColumnFilters, setShowColumnFilters] = useState(false);
 
     useEffect(() => {
@@ -57,14 +57,14 @@ const WhPlaces = () => {
                 size: 150,
             },
             {
-                accessorKey: 'OPIS',
-                header: 'Opis',
-                size: 300,
-            },
-            {
                 accessorKey: 'KOD',
                 header: 'Kod kreskowy',
                 size: 200,
+            },
+            {
+                accessorKey: 'OPIS',
+                header: 'Opis',
+                size: 600,
             },
         ],
         [],
@@ -72,6 +72,7 @@ const WhPlaces = () => {
 
     return (
         <>
+        <Topic>MIEJSCA MAGAZYNOWE</Topic>
             <FunctionButtons>
                 <StyledButton
                     onClick={() => toggleModal()}>

@@ -82,7 +82,10 @@ app.get('/apiGetWhCarriers', async(req,res) => {
     res.send(result.recordset)
 });
 
-
+app.post('/postNewCarrier', async(req,res) => {
+    dbOperation.setNewCarriers(req.body)
+    res.status(200).json({ success: true })
+});
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

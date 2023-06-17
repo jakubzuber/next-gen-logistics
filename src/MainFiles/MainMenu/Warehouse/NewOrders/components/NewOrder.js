@@ -2,6 +2,7 @@ import { useState } from "react";
 import ReactJsAlert from "reactjs-alert";
 import Popup from "reactjs-popup";
 import * as XLSX from "xlsx";
+import { sendNewOrder } from "./CallsToDatabase";
 import { Table, Thead, Td, Topic, StyledInput, ButtonContainer, NewOrderButton } from "../../../styled";
 import { StyledNewDataContainer } from './styled'
 
@@ -30,20 +31,6 @@ const NewOrder = ({ modal, closeModal, clients }) => {
 
 // sending new order to database functions
     const [selectedClient, setSelectedClient] = useState();
-
-    const sendNewOrder = async (newOrder, data) => {
-        await fetch('/setNewOrder', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                newOrder,
-                data
-            })
-        })
-    };
 
     const onClose = () => {
         closeModal()
@@ -106,7 +93,7 @@ const NewOrder = ({ modal, closeModal, clients }) => {
                 )}
                 <ButtonContainer data={data}>
                     <form>
-                        <select style={{ padding: 5, backgroundColor: '#272953', border: 'none', color: 'white', fontSize: '16px' }} required onChange={({ target }) => setSelectedClient(target.value)} defaultValue="">
+                        <select style={{ padding: 5, backgroundColor: '#161b70', border: 'none', color: 'white', fontSize: '16px' }} required onChange={({ target }) => setSelectedClient(target.value)} defaultValue="">
                             <option value="" disabled >Wybierz klienta</option>
                             {clients.map(client => (
                                 <option key={client.ID} value={client.ID}>{client.SYMBOL}</option>
