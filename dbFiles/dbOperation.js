@@ -51,7 +51,6 @@ const getNewOrdersData = async () => {
 		MIEJSCOWOSC,
 		ADRES,
 		KRAJ,
-		UWAGI,
 		DANE_AUTA,
 		OBSLUGA
         FROM PRZYJECIA1 P CROSS APPLY
@@ -115,18 +114,18 @@ const setNewOrder = async ({ newOrder, data }) => {
 
         INSERT INTO PRZYJECIA1 (KLIENT_ID, ILOSC, WAGA, NADAWCA, KOD_POCZTOWY, MIEJSCOWOSC, ADRES, KRAJ, DANE_AUTA)
         VALUES (
-        ${newOrder.client},
-        ${newOrder.number},
-        ${newOrder.weight},
-        '${newOrder.nadawca}',
-        '${newOrder.kod}',
-        '${newOrder.miejscowosc}',
-        '${newOrder.adres}',
-        '${newOrder.kraj}',
-        '${newOrder.dane}'
+        ${newOrder.KLIENT_ID},
+        ${newOrder.ILOSC},
+        ${newOrder.WAGA},
+        '${newOrder.NADAWCA}',
+        '${newOrder.KOD_POCZTOWY}',
+        '${newOrder.MIEJSCOWOSC}',
+        '${newOrder.ADRES}',
+        '${newOrder.KRAJ}',
+        '${newOrder.DANE_AUTA}'
         )
 
-        DECLARE @ID_PRZYJECIA INT = (SELECT TOP 1 ID FROM PRZYJECIA1 WHERE KLIENT_ID = ${newOrder.client} ORDER BY ID DESC)
+        DECLARE @ID_PRZYJECIA INT = (SELECT TOP 1 ID FROM PRZYJECIA1 WHERE KLIENT_ID = ${newOrder.KLIENT_ID} ORDER BY ID DESC)
         
         INSERT INTO PRZYJECIA_SZCZEGOLY (PRZYJECIE_ID, KOD_PRODUKTU, NAZWA_PRODUKTU, ILOSC, WAGA, PAKOWANIE, UWAGI) VALUES 
             ${data.map(a => `( @ID_PRZYJECIA, '${a.KOD_PRODUKTU}', '${a.NAZWA_PRODUKTU}', ${a.ILOSC},${a.WAGA},'${a.PAKOWANIE}','${a.UWAGI}')`)}
@@ -174,6 +173,9 @@ const deleteOrder = async (data) => {
         await pool.request().query(`
         delete from PRZYJECIA1
         where ID = ${data.idOrder}
+
+        delete from PRZYJECIA_SZCZEGOLY
+        WHERE PRZYJECIE_ID = ${data.idOrder}
         `)
     }
     catch (error) {

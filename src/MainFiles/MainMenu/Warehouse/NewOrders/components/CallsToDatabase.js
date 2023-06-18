@@ -1,4 +1,4 @@
-export  const sendNewOrder = async (newOrder, data) => {
+export  const sendNewOrder = async ({newOrder, data}) => {
     await fetch('/setNewOrder', {
         method: 'POST',
         headers: {

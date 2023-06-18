@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteOrder, clearWorkerFromOrder, setWorkerToOrder } from "./components/CallsToDatabase";
+import { deleteOrder, clearWorkerFromOrder, setWorkerToOrder, sendNewOrder } from "./components/CallsToDatabase";
 
 export const fetchNewOrders = createAsyncThunk('routes/fetchNewOrders', async () => {
     const response = await fetch('./apiFetchNewOrders', {
@@ -32,10 +32,13 @@ const newOrdersSlice = createSlice({
             clearWorkerFromOrder(orderId)
         },
         assignWhWorker: ({newOrders}, { payload: state}) => {
-            console.log(state)
             const index = newOrders.findIndex(({ ID }) => ID === state.id)
             newOrders[index].OBSLUGA = state.worker
             setWorkerToOrder({id: state.id, worker: state.worker}) 
+        },
+        addOrder: ({ newOrders }, { payload: state }) => {
+            newOrders.push(state.order)
+            sendNewOrder({newOrder: state.order, data: state.details})
         },
     },
     extraReducers: builder => {
@@ -58,7 +61,8 @@ const newOrdersSlice = createSlice({
 export const { 
     removeOrder,
     clearWorker,
-    assignWhWorker
+    assignWhWorker,
+    addOrder
 } = newOrdersSlice.actions;
 
 export const selectNewOrders = state => state.newOrders

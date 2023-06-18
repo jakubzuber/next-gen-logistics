@@ -132,8 +132,8 @@ const WhCarriers = () => {
                     enableRowActions
                     enableColumnResizing
                     positionActionsColumn={'last'}
-                    renderRowActionMenuItems={({ row }) => [
-                        <MenuItem key="usun" onClick={() => dispatch(removeCarrier(row.original.ID))}>
+                    renderRowActionMenuItems={({ row, closeMenu }) => [
+                        <MenuItem key="usun" onClick={() => {dispatch(removeCarrier(row.original.ID)), closeMenu()}}>
                             Usuń
                         </MenuItem>,
                     ]}

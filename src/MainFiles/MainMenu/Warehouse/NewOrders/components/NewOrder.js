@@ -2,12 +2,16 @@ import { useState } from "react";
 import ReactJsAlert from "reactjs-alert";
 import Popup from "reactjs-popup";
 import * as XLSX from "xlsx";
-import { sendNewOrder } from "./CallsToDatabase";
 import { Table, Thead, Td, Topic, StyledInput, ButtonContainer, NewOrderButton } from "../../../styled";
-import { StyledNewDataContainer } from './styled'
+import { StyledNewDataContainer } from './styled';
+import { addOrder, fetchNewOrders } from "../newOrdersSlice";
+import { useDispatch } from "react-redux";
+import { fetchNewOrdersDetails } from "../newOrdersDetailsSlice";
 
 
 const NewOrder = ({ modal, closeModal, clients }) => {
+    const dispatch = useDispatch()
+
 // error hendler
     const [status, setStatus] = useState(false);
     const [type, setType] = useState("");
@@ -30,7 +34,12 @@ const NewOrder = ({ modal, closeModal, clients }) => {
     };
 
 // sending new order to database functions
-    const [selectedClient, setSelectedClient] = useState();
+    const initialState = {
+        id: null,
+        symbol: null
+    }
+
+    const [selectedClient, setSelectedClient] = useState(initialState);
 
     const onClose = () => {
         closeModal()
@@ -39,25 +48,27 @@ const NewOrder = ({ modal, closeModal, clients }) => {
     };
 
     const onSubmit = () => {
-        if (selectedClient === undefined) {
+        if (selectedClient.id === undefined) {
             setStatus(true)
             setType("error")
             setTitle("Klient nie został uzupełniony")
         } else {
             const newOrder = {
-                client: Number(selectedClient),
-                number: data.map(i => (i.ILOSC)).reduce((a, b) => a + b, 0),
-                weight: data.map(i => (i.WAGA)).reduce((a, b) => a + b, 0).toFixed(3),
-                nadawca: data[0].NADAWCA,
-                kod: data[0].KOD_POCZTOWY,
-                miejscowosc: data[0].MIEJSCOWOSC,
-                adres: data[0].ADRES,
-                kraj: data[0].KRAJ,
-                dane: data[0].DANE_AUTA
+                KLIENT_ID: Number(selectedClient.id),
+                ILOSC: data.map(i => (i.ILOSC)).reduce((a, b) => a + b, 0),
+                WAGA: data.map(i => (i.WAGA)).reduce((a, b) => a + b, 0).toFixed(3),
+                NADAWCA: data[0].NADAWCA,
+                KOD_POCZTOWY: data[0].KOD_POCZTOWY,
+                MIEJSCOWOSC: data[0].MIEJSCOWOSC,
+                ADRES: data[0].ADRES,
+                KRAJ: data[0].KRAJ,
+                DANE_AUTA: data[0].DANE_AUTA,
+                KLIENT_NAZWA: selectedClient.symbol
             }
-            sendNewOrder(newOrder, data)
+            dispatch(addOrder({order: newOrder, details: data}))
             onClose()
-            window.location.reload(false);
+            dispatch(fetchNewOrdersDetails())
+            dispatch(fetchNewOrders())
         }
     };
 
@@ -93,10 +104,14 @@ const NewOrder = ({ modal, closeModal, clients }) => {
                 )}
                 <ButtonContainer data={data}>
                     <form>
-                        <select style={{ padding: 5, backgroundColor: '#161b70', border: 'none', color: 'white', fontSize: '16px' }} required onChange={({ target }) => setSelectedClient(target.value)} defaultValue="">
+                        <select style={{ padding: 5, backgroundColor: '#161b70', border: 'none', color: 'white', fontSize: '16px' }} 
+                        required 
+                        onChange={({ target }) => setSelectedClient({id: target.value.split(",")[0], symbol: target.value.split(",")[1]})} 
+                        defaultValue=""
+                        >
                             <option value="" disabled >Wybierz klienta</option>
                             {clients.map(client => (
-                                <option key={client.ID} value={client.ID}>{client.SYMBOL}</option>
+                                <option key={client.ID} value={[client.ID, client.NAZWA]}>{client.SYMBOL}</option>
                             ))}
                         </select>
                     </form>

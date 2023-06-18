@@ -148,11 +148,6 @@ const NewOrders = () => {
                 size: 30,
             },
             {
-                accessorKey: 'UWAGI',
-                header: 'Uwagi',
-                size: 150,
-            },
-            {
                 accessorKey: 'DANE_AUTA',
                 header: 'Dane auta',
                 size: 50,
@@ -232,16 +227,16 @@ const NewOrders = () => {
                     enableRowActions
                     positionActionsColumn={'last'}
                     options={{ actionsCellStyle: { display: "flex", justifyContent: "center", backgroundColor: 'red' } }}
-                    renderRowActionMenuItems={({ row }) => [
-                        <MenuItem sx={{ justifyContent: 'center' }} key="wydrukuj" onClick={() => dispatch(clearWorker(row.original.ID))}>
+                    renderRowActionMenuItems={({ row, closeMenu }) => [
+                        <MenuItem  sx={{ justifyContent: 'center' }} key="wydrukuj" onClick={() => {dispatch(clearWorker(row.original.ID)), closeMenu()}}>
                             Usuń magazyniera
                         </MenuItem>,
-                        <MenuItem sx={{ justifyContent: 'center' }} key="usun" onClick={() => dispatch(removeOrder(row.original.ID))}>
+                        <MenuItem sx={{ justifyContent: 'center' }} key="usun" onClick={() => {dispatch(removeOrder(row.original.ID)), closeMenu()}}>
                             Usuń zlecenie
                         </MenuItem>,
                         <MenuItem sx={{ justifyContent: 'center' }} key="magazynier" onClick={() => fetchWhWorker()} >
                             <StyledSelect
-                                onChange={({ target }) => dispatch(assignWhWorker({ worker: target.value, id: row.original.ID }))}
+                                onChange={({ target }) => {dispatch(assignWhWorker({ worker: target.value, id: row.original.ID })), closeMenu()}}
                                 defaultValue=""
                             >
                                 <option key={0} value="" >Wybierz magazyniera</option>

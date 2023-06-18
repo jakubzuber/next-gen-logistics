@@ -140,8 +140,8 @@ const WhPlaces = () => {
                     enableRowActions
                     enableColumnResizing
                     positionActionsColumn={'last'}
-                    renderRowActionMenuItems={({ row }) => [
-                        <MenuItem key="usun" onClick={() => dispatch(removePlace(row.original.ID))}>
+                    renderRowActionMenuItems={({ row, closeMenu }) => [
+                        <MenuItem key="usun" onClick={() => {dispatch(removePlace(row.original.ID)), closeMenu()}}>
                             Usuń
                         </MenuItem>
                     ]}
