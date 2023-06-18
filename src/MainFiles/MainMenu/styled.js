@@ -74,7 +74,7 @@ export const Td = styled.td`
 `;
 
 export const StyledButton = styled.div`
-    margin: 20px 0;
+    margin: 20px 10px;
     padding: 5px;
     color: white;
     transition-duration: 300ms ;

@@ -175,7 +175,7 @@ const NewOrders = () => {
         [],
     );
 
-    console.log(whWorker)
+    
 
     return (
         <div>
@@ -242,7 +242,6 @@ const NewOrders = () => {
                     muiTableHeadCellFilterTextFieldProps={{ sx: { backgroundColor: 'white', borderRadius: '7px', padding: '2px' } }}
                     enableRowActions
                     positionActionsColumn={'last'}
-                    displayColumnDefOptions={{}}
                     options={{ actionsCellStyle: { display: "flex", justifyContent: "center", backgroundColor: 'red' } }}
                     renderRowActionMenuItems={({ row }) => [
                         <MenuItem sx={{ justifyContent: 'center' }} key="wydrukuj" onClick={() => clearWorkerFromOrder(row.original.ID)}>
@@ -266,7 +265,7 @@ const NewOrders = () => {
                     enableTopToolbar={false}
                     initialState={{ showGlobalFilter: true }}
                     icons={{
-                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{ color: 'white' }} {...props} />
+                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{ color: '#ffffff' }} {...props} />
                     }}
                     onColumnVisibilityChange={(updater) => {
                         setColumnVisibility((prev) =>

@@ -132,7 +132,7 @@ const NewWhPlace = ({ modal, closeModal }) => {
                     </GridContainer>
                     <form onSubmit={onAccept} >
                         {Array.from({ length: places }).map((v, i) =>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+                            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                                 <Input 
                                 name="123" 
                                 minLength={9} 

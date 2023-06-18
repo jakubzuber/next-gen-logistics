@@ -61,11 +61,17 @@ const WhCarriers = () => {
         ],
         [],
     );
-
+    
     return (
         <>
-        <Topic>NOŚNIKI</Topic>
+            <Topic>NOŚNIKI</Topic>
             <FunctionButtons>
+                {Object.keys(rowSelection).length !== 0 &&
+                    <StyledButton
+                        onClick={() => console.log('dasdasd')}>
+                        Wydrukuj zaznaczone
+                    </StyledButton>
+                }
                 <StyledButton
                     onClick={() => toggleModal()}>
                     Nowe nośniki
@@ -131,9 +137,10 @@ const WhCarriers = () => {
                         </MenuItem>,
                     ]}
                     enableRowSelection
+                    getRowId={(row) => row.ID}
                     enableTopToolbar={false}
                     icons={{
-                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{color: 'white'}} {...props}/>
+                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{ color: 'white' }} {...props} />
                     }}
                     initialState={{ showGlobalFilter: true }}
                     onColumnVisibilityChange={(updater) => {
