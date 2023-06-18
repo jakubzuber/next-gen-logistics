@@ -17,7 +17,7 @@ import {
     MRT_ToggleFiltersButton,
     MRT_ToolbarAlertBanner,
 } from 'material-react-table';
-import { Delete, Edit } from '@mui/icons-material';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const WhPlaces = () => {
     const dispatch = useDispatch();
@@ -140,6 +140,9 @@ const WhPlaces = () => {
                     ]}
                     enableRowSelection
                     enableTopToolbar={false}
+                    icons={{
+                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{color: 'white'}} {...props}/>
+                    }}
                     initialState={{ showGlobalFilter: true }}
                     onColumnVisibilityChange={(updater) => {
                         setColumnVisibility((prev) =>

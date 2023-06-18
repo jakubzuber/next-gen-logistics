@@ -18,7 +18,7 @@ import {
 } from 'material-react-table';
 import { Box, Toolbar, } from '@mui/material';
 import { deleteCarrier } from './components/CallsToDatabase';
-
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 
 const WhCarriers = () => {
@@ -132,6 +132,9 @@ const WhCarriers = () => {
                     ]}
                     enableRowSelection
                     enableTopToolbar={false}
+                    icons={{
+                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{color: 'white'}} {...props}/>
+                    }}
                     initialState={{ showGlobalFilter: true }}
                     onColumnVisibilityChange={(updater) => {
                         setColumnVisibility((prev) =>

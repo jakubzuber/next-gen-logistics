@@ -19,9 +19,5 @@ html {
   box-sizing: border-box;
 }
 
-.MuiTable-root tr td:last-child div {
-  background-color: red;
-  color: red;
-}
 
 

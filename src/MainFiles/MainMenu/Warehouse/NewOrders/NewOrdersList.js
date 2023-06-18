@@ -24,6 +24,7 @@ import {
     MRT_ToolbarAlertBanner,
 } from 'material-react-table';
 import { Box, Toolbar, } from '@mui/material';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const NewOrders = () => {
     const dispatch = useDispatch();
@@ -174,7 +175,7 @@ const NewOrders = () => {
         [],
     );
 
-        console.log(whWorker)
+    console.log(whWorker)
 
     return (
         <div>
@@ -241,16 +242,16 @@ const NewOrders = () => {
                     muiTableHeadCellFilterTextFieldProps={{ sx: { backgroundColor: 'white', borderRadius: '7px', padding: '2px' } }}
                     enableRowActions
                     positionActionsColumn={'last'}
-                    displayColumnDefOptions={{ }}
-                    options={{actionsCellStyle: {display:"flex", justifyContent: "center", backgroundColor: 'red'}}}
+                    displayColumnDefOptions={{}}
+                    options={{ actionsCellStyle: { display: "flex", justifyContent: "center", backgroundColor: 'red' } }}
                     renderRowActionMenuItems={({ row }) => [
-                        <MenuItem sx={{justifyContent: 'center'}} key="wydrukuj" onClick={() => clearWorkerFromOrder(row.original.ID)}>
+                        <MenuItem sx={{ justifyContent: 'center' }} key="wydrukuj" onClick={() => clearWorkerFromOrder(row.original.ID)}>
                             Usuń magazyniera
                         </MenuItem>,
-                        <MenuItem sx={{justifyContent: 'center'}} key="usun" onClick={() => deleteOrder(row.original.ID)}>
+                        <MenuItem sx={{ justifyContent: 'center' }} key="usun" onClick={() => deleteOrder(row.original.ID)}>
                             Usuń zlecenie
                         </MenuItem>,
-                        <MenuItem sx={{justifyContent: 'center'}} key="magazynier" onClick={() => onOpenSelectList({id: row.original.ID})} >
+                        <MenuItem sx={{ justifyContent: 'center' }} key="magazynier" onClick={() => onOpenSelectList({ id: row.original.ID })} >
                             <StyledSelect
                                 onChange={({ target }) => setWorkerToOrder({ worker: target.value, id: row.original.ID })}
                                 defaultValue=""
@@ -264,6 +265,9 @@ const NewOrders = () => {
                     ]}
                     enableTopToolbar={false}
                     initialState={{ showGlobalFilter: true }}
+                    icons={{
+                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{ color: 'white' }} {...props} />
+                    }}
                     onColumnVisibilityChange={(updater) => {
                         setColumnVisibility((prev) =>
                             updater instanceof Function ? updater(prev) : updater,
