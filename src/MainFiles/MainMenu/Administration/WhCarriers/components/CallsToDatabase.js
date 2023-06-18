@@ -9,7 +9,6 @@ export const deleteCarrier = async (props) => {
             idCarrier: props
         })
     })
-    window.location.reload(false);
 };
 
 

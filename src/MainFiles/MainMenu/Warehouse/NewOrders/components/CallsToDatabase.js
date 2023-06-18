@@ -23,11 +23,9 @@ export const deleteOrder = async ( id ) => {
             idOrder: id
         })
     })
-    window.location.reload(false);
 };
 
 export const clearWorkerFromOrder = async ( id ) => {
-    console.log(id)
         await fetch('/clearWorkerFromOrder', {
             method: 'POST',
             headers: {
@@ -38,11 +36,9 @@ export const clearWorkerFromOrder = async ( id ) => {
                 idOrder: id
             })
         })
-        window.location.reload(false);
 };
 
 export const setWorkerToOrder = async ({ id, worker }) => {
-    console.log(id + worker)
     if (worker === null || worker === "") {
         return
     } else {
@@ -57,6 +53,5 @@ export const setWorkerToOrder = async ({ id, worker }) => {
                 idWorker: worker
             })
         })
-        window.location.reload(false);
     }
 };

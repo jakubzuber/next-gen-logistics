@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { deletePlace } from "./components/CallsToDatabase";
 
 export const fetchWhPlaces = createAsyncThunk('routes/getWhPlaces', async () => {
     const response = await fetch('./apiGetWhPlaces', {
@@ -20,6 +21,11 @@ const whPlacesSlice = createSlice({
         error: ''
     },
     reducers: {
+        removePlace: ({whPlaces}, {payload: placeId}) => {
+            const index = whPlaces.findIndex(({ ID }) => ID === placeId)
+            whPlaces.splice(index, 1)
+            deletePlace(placeId)
+        },
     },
     extraReducers: builder => {
         builder.addCase(fetchWhPlaces.pending, (state) => {
@@ -37,6 +43,10 @@ const whPlacesSlice = createSlice({
         })
     }
 })
+
+export const { 
+    removePlace
+} = whPlacesSlice.actions;
 
 export const selectWhPlaces = state => state.whPlaces
 

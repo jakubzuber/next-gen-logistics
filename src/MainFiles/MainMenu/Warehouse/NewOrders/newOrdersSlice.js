@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { deleteOrder, clearWorkerFromOrder, setWorkerToOrder } from "./components/CallsToDatabase";
 
 export const fetchNewOrders = createAsyncThunk('routes/fetchNewOrders', async () => {
     const response = await fetch('./apiFetchNewOrders', {
@@ -20,6 +21,22 @@ const newOrdersSlice = createSlice({
         error: ''
     },
     reducers: {
+        removeOrder: ({newOrders}, {payload: orderId}) => {
+            const index = newOrders.findIndex(({ ID }) => ID === orderId)
+            newOrders.splice(index, 1)
+            deleteOrder(orderId)
+        },
+        clearWorker: ({newOrders}, {payload: orderId}) => {
+            const index = newOrders.findIndex(({ ID }) => ID === orderId)
+            newOrders[index].OBSLUGA = null
+            clearWorkerFromOrder(orderId)
+        },
+        assignWhWorker: ({newOrders}, { payload: state}) => {
+            console.log(state)
+            const index = newOrders.findIndex(({ ID }) => ID === state.id)
+            newOrders[index].OBSLUGA = state.worker
+            setWorkerToOrder({id: state.id, worker: state.worker}) 
+        },
     },
     extraReducers: builder => {
         builder.addCase(fetchNewOrders.pending, (state) => {
@@ -36,7 +53,13 @@ const newOrdersSlice = createSlice({
             state.error = action.error.message
         })
     }
-})
+});
+
+export const { 
+    removeOrder,
+    clearWorker,
+    assignWhWorker
+} = newOrdersSlice.actions;
 
 export const selectNewOrders = state => state.newOrders
 

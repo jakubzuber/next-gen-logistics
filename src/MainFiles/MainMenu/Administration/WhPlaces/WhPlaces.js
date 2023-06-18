@@ -1,11 +1,11 @@
 /* eslint-disable */
 import React, { useReducer, useRef, useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWhPlaces, selectWhPlaces } from "./whPlacesSlice";
-import { deletePlace } from './components/CallsToDatabase'
+import { fetchWhPlaces, selectWhPlaces, removePlace } from "./whPlacesSlice";
 import NewWhPlace from "./components/NewWhPlace";
+import BarCodePrint from '../components/BarCodePrint';
 import { FunctionButtons, StyledButton, Topic } from "../../styled";
-import { MenuItem, Box, Toolbar  } from "@mui/material";
+import { MenuItem, Box, Toolbar } from "@mui/material";
 import { MRT_Localization_PL } from 'material-react-table/locales/pl';
 import {
     MaterialReactTable,
@@ -18,12 +18,14 @@ import {
     MRT_ToolbarAlertBanner,
 } from 'material-react-table';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ReactToPrint from 'react-to-print';
 
 const WhPlaces = () => {
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
     const { whPlaces } = useSelector(selectWhPlaces);
-    
+    let componentRef = useRef();
+
     const [rowSelection, setRowSelection] = useState({});
     const tableInstanceRef = useRef(null);
     const rerender = useReducer(() => ({}), {})[1];
@@ -72,8 +74,17 @@ const WhPlaces = () => {
 
     return (
         <>
-        <Topic>MIEJSCA MAGAZYNOWE</Topic>
+            <Topic>MIEJSCA MAGAZYNOWE</Topic>
             <FunctionButtons>
+                {Object.keys(rowSelection).length !== 0 &&
+                    <ReactToPrint
+                        trigger={() =>
+                            <StyledButton>
+                                Wydrukuj zaznaczone
+                            </StyledButton>}
+                        content={() => componentRef}
+                    />
+                }
                 <StyledButton
                     onClick={() => toggleModal()}>
                     Nowe miejsca składowe
@@ -81,36 +92,35 @@ const WhPlaces = () => {
             </FunctionButtons>
             <Box sx={{ borderRadius: '7px', backgroundColor: '#1a1e75' }}>
                 {tableInstanceRef.current && (
-                    <>
-                        <Toolbar
-                            sx={(theme) => ({
-                                backgroundColor: '#1a1e75',
-                                borderRadius: '4px',
-                                display: 'flex',
-                                flexDirection: {
-                                    xs: 'column',
-                                    lg: 'row',
-                                },
-                                gap: '1rem',
-                                justifyContent: 'space-between',
-                                p: '1.5rem 0',
-                            })}
-                        >
-                            <div style={{ backgroundColor: 'white', borderRadius: '7px' }} ><MRT_GlobalFilterTextField table={tableInstanceRef.current} /></div>
-                            <Box>
-                                <MRT_ToggleFiltersButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
-                                <MRT_ShowHideColumnsButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
-                                <MRT_ToggleDensePaddingButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
-                                <MRT_FullScreenToggleButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
-                            </Box>
-                        </Toolbar>
-                        <Box sx={{ display: 'grid', width: '100%' }}>
+                    <Toolbar
+                        sx={(theme) => ({
+                            backgroundColor: '#1a1e75',
+                            borderRadius: '4px',
+                            display: 'flex',
+                            flexDirection: {
+                                xs: 'column',
+                                lg: 'row',
+                            },
+                            gap: '1rem',
+                            justifyContent: 'space-between',
+                            p: '1.5rem 0',
+                            height: '1vh'
+                        })}
+                    >
+                        <div style={{ backgroundColor: 'white', borderRadius: '7px' }} ><MRT_GlobalFilterTextField table={tableInstanceRef.current} /></div>
+                        <Box>
+                        </Box>
+                        <Box sx={{ display: 'flex' }}>
                             <MRT_ToolbarAlertBanner
                                 stackAlertBanner
                                 table={tableInstanceRef.current}
                             />
+                            <MRT_ToggleFiltersButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
+                            <MRT_ShowHideColumnsButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
+                            <MRT_ToggleDensePaddingButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
+                            <MRT_FullScreenToggleButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
                         </Box>
-                    </>
+                    </Toolbar>
                 )}
                 <MaterialReactTable
                     localization={MRT_Localization_PL}
@@ -118,7 +128,7 @@ const WhPlaces = () => {
                     data={whPlaces}
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
-                    muiTableBodyRowProps={{ hover: false, sx: { backgroundColor: '#161b70', color: 'white', ":hover": { backgroundColor: '#11189b' } } }}
+                    muiTableBodyRowProps={{ hover: false, sx: { backgroundColor: '#161b70', color: 'white' } }}
                     muiTableBodyProps={{ sx: { backgroundColor: '#161b70', color: 'white' } }}
                     muiTableBodyCellProps={{ sx: { color: 'white' } }}
                     muiTableHeadRowProps={{ sx: { backgroundColor: '#161b70' } }}
@@ -131,17 +141,15 @@ const WhPlaces = () => {
                     enableColumnResizing
                     positionActionsColumn={'last'}
                     renderRowActionMenuItems={({ row }) => [
-                            <MenuItem key="wydrukuj" onClick={() => console.info('Edit')}>
-                                Wydrukuj
-                            </MenuItem>,
-                            <MenuItem key="usun" onClick={() => deletePlace(row.original.ID)}>
-                                Usuń
-                            </MenuItem>
+                        <MenuItem key="usun" onClick={() => dispatch(removePlace(row.original.ID))}>
+                            Usuń
+                        </MenuItem>
                     ]}
                     enableRowSelection
+                    getRowId={(row) => row.KOD}
                     enableTopToolbar={false}
                     icons={{
-                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{color: 'white'}} {...props}/>
+                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{ color: 'white' }} {...props} />
                     }}
                     initialState={{ showGlobalFilter: true }}
                     onColumnVisibilityChange={(updater) => {
@@ -197,6 +205,11 @@ const WhPlaces = () => {
                 )}
             </Box>
             <NewWhPlace modal={modal} closeModal={closeModal} />
+            <div style={{ display: 'none' }}>
+                <div ref={(el) => (componentRef = el)}>
+                    <BarCodePrint rowSelection={rowSelection} />
+                </div>
+            </div>
         </>
     );
 };

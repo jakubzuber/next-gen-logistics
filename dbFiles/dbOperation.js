@@ -200,7 +200,7 @@ const setNewPlaces = async ({ data }) => {
         await pool.request().query(`
 
         INSERT INTO WH_PLACES (KOD_KRESKOWY, OPIS, KOD) VALUES 
-        ${data.map(a => `('${a.symbol}', '${a.discription}', CONCAT('${a.symbol}',333))`)}
+        ${data.map(a => `('${a.symbol}', '${a.discription}', convert(numeric(12,0),rand() * 899999999999) + 100000000000)`)}
         `)
     }
     catch (error) {

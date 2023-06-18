@@ -4,6 +4,7 @@ export const StyledNewDataContainer = styled.div`
     background-color: #1a1e75;
     padding: 30px;
     max-width: 1400px;
+    min-width: 30%;
     border: 3px solid white;
     border-radius: 10px;
     text-align: center;

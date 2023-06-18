@@ -1,12 +1,9 @@
 
 
 const Users = () => {
-
     return (
-
-            <p>Użytkownicy</p>
-
-    );
+        <p>Użytkownicy</p>
+    )
 };
 
 export default Users;

@@ -71,3 +71,4 @@ export const RightClickButton = styled.button`
         color: white;
     }
 `;
+

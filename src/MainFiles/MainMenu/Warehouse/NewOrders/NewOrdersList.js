@@ -2,15 +2,12 @@
 import { useReducer, useRef, useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import NewOrder from "./components/NewOrder";
-import { selectNewOrders, fetchNewOrders } from "./newOrdersSlice";
-import { Topic, StyledButton, FunctionButtons, Tr } from "../../styled";
+import { selectNewOrders, fetchNewOrders, removeOrder, clearWorker, assignWhWorker } from "./newOrdersSlice";
+import { Topic, StyledButton, FunctionButtons } from "../../styled";
 import LeftClickMenu from "./components/LeftClickMenu";
 import { fetchNewOrdersDetails } from "./newOrdersDetailsSlice";
 import { fetchClients } from "../../Slices/clientsSlice";
-import { deleteOrder, clearWorkerFromOrder } from './components/CallsToDatabase';
 import { StyledSelect } from '../../styled'
-import { setWorkerToOrder } from "./components/CallsToDatabase";
-
 import { MenuItem } from "@mui/material";
 import { MRT_Localization_PL } from 'material-react-table/locales/pl';
 import {
@@ -30,7 +27,6 @@ const NewOrders = () => {
     const dispatch = useDispatch();
     const { newOrders } = useSelector(selectNewOrders);
     const [whWorker, setWhWorker] = useState([]);
-    const [selectedRow, setSelectedRow] = useState()
 
     //table options
 
@@ -102,11 +98,6 @@ const NewOrders = () => {
 
     const closeModal = () => {
         setModal(false)
-    };
-
-    const onOpenSelectList = ({ id }) => {
-        setSelectedRow(id)
-        fetchWhWorker()
     };
 
     const columns = useMemo(
@@ -187,8 +178,7 @@ const NewOrders = () => {
             </FunctionButtons>
             <Box sx={{ borderRadius: '7px', backgroundColor: '#1a1e75' }}>
                 {tableInstanceRef.current && (
-                    <>
-                        <Toolbar
+                         <Toolbar
                             sx={(theme) => ({
                                 backgroundColor: '#1a1e75',
                                 borderRadius: '4px',
@@ -200,24 +190,23 @@ const NewOrders = () => {
                                 gap: '1rem',
                                 justifyContent: 'space-between',
                                 p: '1.5rem 0',
+                                height: '1vh'
                             })}
                         >
                             <div style={{ backgroundColor: 'white', borderRadius: '7px' }} ><MRT_GlobalFilterTextField table={tableInstanceRef.current} /></div>
                             <Box>
+                            </Box>
+                            <Box sx={{ display: 'flex' }}>
+                            <MRT_ToolbarAlertBanner
+                                    stackAlertBanner
+                                    table={tableInstanceRef.current}
+                                />
                                 <MRT_ToggleFiltersButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
                                 <MRT_ShowHideColumnsButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
                                 <MRT_ToggleDensePaddingButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
                                 <MRT_FullScreenToggleButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
                             </Box>
                         </Toolbar>
-                        <Box sx={{ width: '100%' }}>
-                            <MRT_ToolbarAlertBanner
-                                stackAlertBanner
-                                table={tableInstanceRef.current}
-                            />
-                        </Box>
-                    </>
-
                 )}
                 <MaterialReactTable
                     localization={MRT_Localization_PL}
@@ -244,15 +233,15 @@ const NewOrders = () => {
                     positionActionsColumn={'last'}
                     options={{ actionsCellStyle: { display: "flex", justifyContent: "center", backgroundColor: 'red' } }}
                     renderRowActionMenuItems={({ row }) => [
-                        <MenuItem sx={{ justifyContent: 'center' }} key="wydrukuj" onClick={() => clearWorkerFromOrder(row.original.ID)}>
+                        <MenuItem sx={{ justifyContent: 'center' }} key="wydrukuj" onClick={() => dispatch(clearWorker(row.original.ID))}>
                             Usuń magazyniera
                         </MenuItem>,
-                        <MenuItem sx={{ justifyContent: 'center' }} key="usun" onClick={() => deleteOrder(row.original.ID)}>
+                        <MenuItem sx={{ justifyContent: 'center' }} key="usun" onClick={() => dispatch(removeOrder(row.original.ID))}>
                             Usuń zlecenie
                         </MenuItem>,
-                        <MenuItem sx={{ justifyContent: 'center' }} key="magazynier" onClick={() => onOpenSelectList({ id: row.original.ID })} >
+                        <MenuItem sx={{ justifyContent: 'center' }} key="magazynier" onClick={() => fetchWhWorker()} >
                             <StyledSelect
-                                onChange={({ target }) => setWorkerToOrder({ worker: target.value, id: row.original.ID })}
+                                onChange={({ target }) => dispatch(assignWhWorker({ worker: target.value, id: row.original.ID }))}
                                 defaultValue=""
                             >
                                 <option key={0} value="" >Wybierz magazyniera</option>

@@ -10,7 +10,6 @@ export const deletePlace = async (props) => {
             idPlace: props
         })
     })
-    window.location.reload(false);
 };
 
 export const sendNewPlacesToDatabase = async(data) => {
