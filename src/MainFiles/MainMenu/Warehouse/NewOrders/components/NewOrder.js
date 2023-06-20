@@ -48,7 +48,7 @@ const NewOrder = ({ modal, closeModal, clients }) => {
     };
 
     const onSubmit = () => {
-        if (selectedClient.id === undefined) {
+        if (selectedClient === undefined || selectedClient === null) {
             setStatus(true)
             setType("error")
             setTitle("Klient nie został uzupełniony")

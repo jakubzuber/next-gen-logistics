@@ -1,10 +1,11 @@
 import { BarCodeTextContainer, BarCodeText } from './styled'
+var Barcode = require('react-barcode');
 
 const BarCodePrint = ({ rowSelection }) => {
     return (
         <BarCodeTextContainer >
                 {Object.keys(rowSelection).map((key, index) => (
-                    <BarCodeText key={index}> {key}</BarCodeText>
+                    <Barcode value={key} />
                 ))}   
         </BarCodeTextContainer>
     );

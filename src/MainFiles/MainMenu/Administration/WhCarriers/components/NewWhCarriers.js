@@ -3,9 +3,12 @@ import Popup from "reactjs-popup";
 import { postNewCarriers } from "./CallsToDatabase";
 import { Minus, Plus, StyledNewDataContainer, GridContainer } from "./styled";
 import { NewOrderButton, ButtonContainer, FromSubmitButton } from "../../../styled";
+import { useDispatch } from "react-redux";
+import { fetchWhCarriers } from "../whCarriersSlice";
 
 
 const NewWhCarriers = ({ modal, closeModal }) => {
+    const dispatch = useDispatch()
     const [number, setNumber] = useState(1);
 
     const onClose = () => {
@@ -31,6 +34,8 @@ const NewWhCarriers = ({ modal, closeModal }) => {
 
     const onAccept = () => {
         postNewCarriers(number)
+        onClose()
+        dispatch(fetchWhCarriers())
     };
 
     return (
