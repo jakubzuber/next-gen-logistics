@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledNewDataContainer = styled.div`
     background-color: #161b70;
     padding: 30px;
-    max-width: 1400px;
+    max-width: 1600px;
     border: 3px solid white;
     border-radius: 10px;
     text-align: center;
