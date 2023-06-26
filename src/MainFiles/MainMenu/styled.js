@@ -16,11 +16,11 @@ export const MainContent = styled.div`
 `;
 
 export const StyledMenuItem = styled(MenuItem)`
-    background-color: #181c66;
+    background-color: #1266d4;
     transition-duration: 300ms ;
 
     :hover {
-        background-color: #16113a;
+        background-color: #1266d4;
     }
 `;
 
@@ -28,20 +28,19 @@ export const StyledSubMenu = styled(SubMenu)`
     transition-duration: 300ms ;
 
     :hover {
-        background-color: #16113a;
+        background-color: #1266d4;
     }
 `;
 
 export const Topic = styled.div`
     text-align: center;
-    font-size: 20px;
-    color: #050505;
+    font-size: 25px;
+    color: white;
     font-weight: 500;
     padding: 2px;
     width: 100%;
-    background-color: white;
-    border-radius: 10px;
-    margin: 10px 0px;
+    background-color: #1266d4;
+    border-radius: 7px;
 `;
 
 export const Table = styled.table`

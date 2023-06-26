@@ -168,6 +168,7 @@ const clearWorkerFromOrder = async (data) => {
 };
 
 const deleteOrder = async (data) => {
+    console.log(data)
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
@@ -176,6 +177,9 @@ const deleteOrder = async (data) => {
 
         delete from PRZYJECIA_SZCZEGOLY
         WHERE PRZYJECIE_ID = ${data.idOrder}
+
+        delete from STANY_MAGAZYNOWE
+        where PRZYJECIE_ID = ${data.idOrder} AND W_TRAKCIE = 1
         `)
     }
     catch (error) {

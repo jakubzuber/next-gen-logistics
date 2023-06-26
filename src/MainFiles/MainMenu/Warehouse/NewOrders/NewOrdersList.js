@@ -171,11 +171,11 @@ const NewOrders = () => {
                     onClick={toggleModal}
                 >Dodaj nowe zlecenie</StyledButton>
             </FunctionButtons>
-            <Box sx={{ borderRadius: '7px', backgroundColor: '#1a1e75' }}>
+            <Box sx={{ borderRadius: '7px', backgroundColor: '#1266d4' }}>
                 {tableInstanceRef.current && (
                          <Toolbar
                             sx={(theme) => ({
-                                backgroundColor: '#1a1e75',
+                                backgroundColor: '#1266d4',
                                 borderRadius: '4px',
                                 display: 'flex',
                                 flexDirection: {
@@ -214,11 +214,11 @@ const NewOrders = () => {
                     muiTableBodyRowProps={({ row }) => ({
                         onClick: () => { openDetials({ orderId: row.original.ID, clientId: row.original.KLIENT_ID }) },
                         hover: false,
-                        sx: { backgroundColor: '#161b70', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#11189b' } }
+                        sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1266d4' } }
                     })}
-                    muiTableBodyProps={{ sx: { backgroundColor: '#161b70', color: 'white' } }}
+                    muiTableBodyProps={{ sx: { backgroundColor: '#1266d4', color: 'white' } }}
                     muiTableBodyCellProps={{ sx: { color: 'white' } }}
-                    muiTableHeadRowProps={{ sx: { backgroundColor: '#161b70' } }}
+                    muiTableHeadRowProps={{ sx: { backgroundColor: '#1266d4' } }}
                     muiTableHeadCellProps={{ sx: { color: 'white' } }}
                     muiSelectCheckboxProps={{ sx: { color: 'white' } }}
                     muiSelectAllCheckboxProps={{ sx: { color: 'white' } }}

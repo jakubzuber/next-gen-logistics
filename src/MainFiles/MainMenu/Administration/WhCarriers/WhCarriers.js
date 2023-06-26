@@ -82,11 +82,11 @@ const WhCarriers = () => {
                     Nowe nośniki
                 </StyledButton>
             </FunctionButtons>
-            <Box sx={{ borderRadius: '7px', backgroundColor: '#1a1e75' }}>
+            <Box sx={{ borderRadius: '7px', backgroundColor: '#1266d4' }}>
                 {tableInstanceRef.current && (
                     <Toolbar
                         sx={(theme) => ({
-                            backgroundColor: '#1a1e75',
+                            backgroundColor: '#1266d4',
                             borderRadius: '4px',
                             display: 'flex',
                             flexDirection: {
@@ -120,10 +120,10 @@ const WhCarriers = () => {
                     data={whCarriers}
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
-                    muiTableBodyRowProps={{ hover: false, sx: { backgroundColor: '#161b70', color: 'white' } }}
-                    muiTableBodyProps={{ sx: { backgroundColor: '#161b70', color: 'white' } }}
+                    muiTableBodyRowProps={{ hover: false, sx: { backgroundColor: '#1266d4', color: 'white' } }}
+                    muiTableBodyProps={{ sx: { backgroundColor: '#1266d4', color: 'white' } }}
                     muiTableBodyCellProps={{ sx: { color: 'white' } }}
-                    muiTableHeadRowProps={{ sx: { backgroundColor: '#161b70' } }}
+                    muiTableHeadRowProps={{ sx: { backgroundColor: '#1266d4' } }}
                     muiTableHeadCellProps={{ sx: { color: 'white' } }}
                     muiSelectCheckboxProps={{ sx: { color: 'white' } }}
                     muiSelectAllCheckboxProps={{ sx: { color: 'white' } }}

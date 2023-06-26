@@ -29,7 +29,7 @@ const MainMenu = () => {
     return (
         <Main collapsed={collapsed}>
             <Sidebar
-                backgroundColor="#181c66"
+                backgroundColor="#1266d4"
                 style={{ height: '100%', minHeight: '100vh' }} collapsed={collapsed}>
                 <nav>
                     <ViewHeadlineIcon onClick={onClickMenuIcon} />
