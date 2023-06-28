@@ -161,8 +161,6 @@ const NewOrders = () => {
         [],
     );
 
-    
-
     return (
         <div>
             <Topic>PRZYJĘCIA</Topic>

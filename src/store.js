@@ -5,6 +5,8 @@ import clientsSlice from "./MainFiles/MainMenu/Slices/clientsSlice";
 import whPlacesSlice from "./MainFiles/MainMenu/Administration/WhPlaces/whPlacesSlice";
 import whCarriersSlice from "./MainFiles/MainMenu/Administration/WhCarriers/whCarriersSlice";
 import stocksSlice from "./MainFiles/MainMenu/Warehouse/Stocks/stocksSlice";
+import stokcDetailsSlice from "./MainFiles/MainMenu/Warehouse/Stocks/components/stockDetailsSlice";
+
 
 export default configureStore({
     reducer: {
@@ -14,5 +16,6 @@ export default configureStore({
         whPlaces: whPlacesSlice,
         whCarriers: whCarriersSlice,
         stocks: stocksSlice,
+        stocksDetails: stokcDetailsSlice
     }
 });

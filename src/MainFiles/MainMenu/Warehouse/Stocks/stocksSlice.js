@@ -6,7 +6,7 @@ export const fetchStocks = createAsyncThunk('routes/fetchStocks', async () => {
         headers: {
             'content-type': 'application/json',
             'Accept': 'application/json'
-        }
+        },
     })
     const data = response.json()
     return data

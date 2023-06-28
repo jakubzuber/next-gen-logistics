@@ -97,6 +97,10 @@ app.get('/apiFetchStocks', async(req,res) => {
     res.send(result.recordset)
 });
 
+app.post('/apiFetchStocksDetails', async(req,res) => {
+    const result = await dbOperation.apiFetchStocksDetails(req.body)
+    res.send(result.recordset)
+});
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

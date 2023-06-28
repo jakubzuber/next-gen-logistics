@@ -2,7 +2,8 @@
 import { useReducer, useRef, useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStocks, selectStocks } from "./stocksSlice";
-import { Topic, StyledButton, FunctionButtons } from "../../styled";
+import { Topic, FunctionButtons } from "../../styled";
+import LeftClickMenu from './components/LeftClickMenu';
 import { MRT_Localization_PL } from 'material-react-table/locales/pl';
 import {
     MaterialReactTable,
@@ -21,7 +22,6 @@ const Stocks = () => {
     
     const dispatch = useDispatch();
     const { stocks } = useSelector(selectStocks);
-    console.log(stocks)
 
     //table options
 
@@ -37,7 +37,21 @@ const Stocks = () => {
         dispatch(fetchStocks())
     }, [dispatch])
 
+    // modal functions (detals of order)
+    const initialDetails = {
+        show: false,
+        kod: null,
+    };
 
+    const [details, setDetails] = useState(initialDetails);
+    
+    const openDetials = ({ kodProduktu }) => {
+        setDetails({ show: true, kod: kodProduktu })
+    };
+
+    const closeDetils = () => {
+        setDetails({ show: false, kod: null })
+    };
 
 
     const columns = useMemo(
@@ -76,7 +90,6 @@ const Stocks = () => {
         [],
     );
 
-    
 
     return (
         <div>
@@ -121,9 +134,9 @@ const Stocks = () => {
                     data={stocks}
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
-                    enableRowSelection
                     enableColumnResizing
                     muiTableBodyRowProps={({ row }) => ({
+                        onClick: () => {openDetials({ kodProduktu: row.original.KOD_PRODUKTU })},
                         hover: false,
                         sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1457ad' } }
                     })}
@@ -192,6 +205,7 @@ const Stocks = () => {
                     </Toolbar>
                 )}
             </Box>
+            <LeftClickMenu modal={details} closeModal={closeDetils} />
         </div>
     );
 };

@@ -293,6 +293,31 @@ const apiFetchStocks =  async () => {
     };
 };
 
+const apiFetchStocksDetails =  async ({kod}) => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT
+	        [ID]
+            ,[PALETA_NUMER]
+            ,[KOD_PRODUKTU]
+            ,[NAZWA_PRODUKTU]
+            ,[ILOSC]
+            ,[WAGA]
+            ,[KLIENT_ID]
+            ,[KLIENT_NAZWA]
+            ,[W_TRAKCIE]
+            ,[PRZYJECIE_ID]
+            ,[KOD_KRESKOWY]
+        FROM [NEXT_GEN_SQL].[dbo].[STANY_MAGAZYNOWE]
+        WHERE KOD_PRODUKTU = '${kod}'
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
 
 
 module.exports = {
@@ -312,5 +337,6 @@ module.exports = {
     getWhCarriers,
     setNewCarriers,
     deleteCarrier,
-    apiFetchStocks
+    apiFetchStocks,
+    apiFetchStocksDetails
 };
