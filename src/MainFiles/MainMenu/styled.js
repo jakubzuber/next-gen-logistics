@@ -41,6 +41,7 @@ export const Topic = styled.div`
     width: 100%;
     background-color: #1266d4;
     border-radius: 7px;
+    margin-bottom: 10px;
 `;
 
 export const Table = styled.table`
@@ -73,7 +74,7 @@ export const Td = styled.td`
 `;
 
 export const StyledButton = styled.div`
-    margin: 20px 10px;
+    margin: 10px 10px;
     padding: 5px;
     color: white;
     transition-duration: 300ms ;

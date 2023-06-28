@@ -214,7 +214,7 @@ const NewOrders = () => {
                     muiTableBodyRowProps={({ row }) => ({
                         onClick: () => { openDetials({ orderId: row.original.ID, clientId: row.original.KLIENT_ID }) },
                         hover: false,
-                        sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1266d4' } }
+                        sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1457ad' } }
                     })}
                     muiTableBodyProps={{ sx: { backgroundColor: '#1266d4', color: 'white' } }}
                     muiTableBodyCellProps={{ sx: { color: 'white' } }}

@@ -92,5 +92,11 @@ app.post('/deleteCarrier', async(req,res) => {
     res.status(200).json({ success: true })
 });
 
+app.get('/apiFetchStocks', async(req,res) => {
+    const result = await dbOperation.apiFetchStocks(req.body)
+    res.send(result.recordset)
+});
+
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

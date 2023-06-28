@@ -168,7 +168,6 @@ const clearWorkerFromOrder = async (data) => {
 };
 
 const deleteOrder = async (data) => {
-    console.log(data)
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
@@ -272,6 +271,27 @@ const deleteCarrier = async (data) => {
     };
 };
 
+const apiFetchStocks =  async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT
+        [KOD_PRODUKTU]
+        ,[NAZWA_PRODUKTU]
+        ,SUM([ILOSC]) ILOSC
+        ,[KLIENT_ID]
+        ,[KLIENT_NAZWA]
+        ,[W_TRAKCIE]
+        ,[KOD_KRESKOWY]
+        FROM [NEXT_GEN_SQL].[dbo].[STANY_MAGAZYNOWE]
+        GROUP BY KOD_PRODUKTU, NAZWA_PRODUKTU, KLIENT_ID, KLIENT_NAZWA, W_TRAKCIE, KOD_KRESKOWY
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
 
 
 
@@ -291,5 +311,6 @@ module.exports = {
     deletePlace,
     getWhCarriers,
     setNewCarriers,
-    deleteCarrier
+    deleteCarrier,
+    apiFetchStocks
 };
