@@ -319,6 +319,40 @@ const apiFetchStocksDetails =  async ({kod}) => {
     };
 };
 
+const apiFetchRelesesOrders = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT
+        K.NAZWA KLIENT_NAZWA,
+		concat(convert(varchar, P.OBSLUGA_START, 32),' ', convert(varchar, P.OBSLUGA_START, 24)) OBSLUGA_START,
+		concat(convert(varchar, P.OBSLUGA_KONIEC, 32),' ', convert(varchar, P.OBSLUGA_KONIEC, 24)) OBSLUGA_KONIEC,
+		P.ID,
+		KLIENT_ID,
+		ILOSC,
+		WAGA,
+		ODBIORCA,
+		KOD_POCZTOWY,
+		MIEJSCOWOSC,
+		ADRES,
+		KRAJ,
+		DANE_AUTA,
+		OBSLUGA
+        FROM WYDANIA P CROSS APPLY
+				(
+				SELECT TOP 1
+				K.NAZWA
+				FROM KLIENCI K
+				WHERE K.ID = P.KLIENT_ID
+				) K
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
 
 module.exports = {
     validateLogIn,
@@ -338,5 +372,6 @@ module.exports = {
     setNewCarriers,
     deleteCarrier,
     apiFetchStocks,
-    apiFetchStocksDetails
+    apiFetchStocksDetails,
+    apiFetchRelesesOrders
 };

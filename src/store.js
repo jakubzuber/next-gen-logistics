@@ -6,6 +6,7 @@ import whPlacesSlice from "./MainFiles/MainMenu/Administration/WhPlaces/whPlaces
 import whCarriersSlice from "./MainFiles/MainMenu/Administration/WhCarriers/whCarriersSlice";
 import stocksSlice from "./MainFiles/MainMenu/Warehouse/Stocks/stocksSlice";
 import stokcDetailsSlice from "./MainFiles/MainMenu/Warehouse/Stocks/components/stockDetailsSlice";
+import relesesSlice from "./MainFiles/MainMenu/Warehouse/Releases/relesesSlice";
 
 
 export default configureStore({
@@ -16,6 +17,7 @@ export default configureStore({
         whPlaces: whPlacesSlice,
         whCarriers: whCarriersSlice,
         stocks: stocksSlice,
-        stocksDetails: stokcDetailsSlice
+        stocksDetails: stokcDetailsSlice,
+        releses: relesesSlice,
     }
 });
