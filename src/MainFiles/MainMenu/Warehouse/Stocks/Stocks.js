@@ -17,6 +17,7 @@ import {
 } from 'material-react-table';
 import { Box, Toolbar, } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { fetchStocksDetails } from './components/stockDetailsSlice';
 
 const Stocks = () => {
     
@@ -47,6 +48,7 @@ const Stocks = () => {
     
     const openDetials = ({ kodProduktu }) => {
         setDetails({ show: true, kod: kodProduktu })
+        dispatch(fetchStocksDetails(kodProduktu))
     };
 
     const closeDetils = () => {

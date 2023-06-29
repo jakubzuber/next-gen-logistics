@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchStocksDetails = createAsyncThunk('routes/fetchStocksDetails', async ({kod}) => {
+export const fetchStocksDetails = createAsyncThunk('routes/fetchStocksDetails', async (kodProduktu) => {
     const response = await fetch('./apiFetchStocksDetails', {
         method: 'POST',
         headers: {
@@ -8,7 +8,7 @@ export const fetchStocksDetails = createAsyncThunk('routes/fetchStocksDetails', 
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            kod: kod
+            kod: kodProduktu
         })
     })
     const data = response.json()
@@ -43,5 +43,6 @@ const stocksDetailsSlice = createSlice({
 });
 
 export const selectStockDetails = state => state.stocksDetails
+export const selectStockLoading = state => state.stocksDetails.loading
 
 export default stocksDetailsSlice.reducer;
