@@ -18,6 +18,7 @@ import {
 import { Box, Toolbar, } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { fetchStocksDetails } from './components/stockDetailsSlice';
+import { fetchNewRelesesDetails } from '../Releases/newRelesesDetailsSlice';
 
 const Stocks = () => {
     
@@ -36,6 +37,7 @@ const Stocks = () => {
 
     useEffect(() => {
         dispatch(fetchStocks())
+        dispatch(fetchNewRelesesDetails())
     }, [dispatch])
 
     // modal functions (detals of order)

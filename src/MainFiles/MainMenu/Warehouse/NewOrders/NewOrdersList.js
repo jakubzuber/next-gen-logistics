@@ -207,7 +207,6 @@ const NewOrders = () => {
                     data={newOrders}
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
-                    enableRowSelection
                     enableColumnResizing
                     muiTableBodyRowProps={({ row }) => ({
                         onClick: () => { openDetials({ orderId: row.original.ID, clientId: row.original.KLIENT_ID }) },

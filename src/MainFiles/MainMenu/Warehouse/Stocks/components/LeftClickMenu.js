@@ -8,8 +8,6 @@ const LeftClickMenu = ({ modal, closeModal }) => {
     const { stocksDetails } = useSelector(state => selectStockDetails(state));
     const loading = useSelector(selectStockLoading);
 
-    console.log(loading)
-
     const onClose = () => {
         closeModal()
     };

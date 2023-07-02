@@ -20,7 +20,6 @@ const stocksSlice = createSlice({
         error: ''
     },
     reducers: {
-
     },
     extraReducers: builder => {
         builder.addCase(fetchStocks.pending, (state) => {

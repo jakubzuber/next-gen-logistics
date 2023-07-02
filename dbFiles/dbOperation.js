@@ -328,7 +328,7 @@ const apiFetchRelesesOrders = async () => {
 		concat(convert(varchar, P.OBSLUGA_START, 32),' ', convert(varchar, P.OBSLUGA_START, 24)) OBSLUGA_START,
 		concat(convert(varchar, P.OBSLUGA_KONIEC, 32),' ', convert(varchar, P.OBSLUGA_KONIEC, 24)) OBSLUGA_KONIEC,
 		P.ID,
-		KLIENT_ID,
+		KLEINT_ID,
 		ILOSC,
 		WAGA,
 		ODBIORCA,
@@ -343,7 +343,7 @@ const apiFetchRelesesOrders = async () => {
 				SELECT TOP 1
 				K.NAZWA
 				FROM KLIENCI K
-				WHERE K.ID = P.KLIENT_ID
+				WHERE K.ID = P.KLEINT_ID
 				) K
         `)
         return data
@@ -353,6 +353,93 @@ const apiFetchRelesesOrders = async () => {
     };
 };
 
+const fetchNewRelesesDetails = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT * FROM WYDANIA_SZCZEGOLY
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const setNewRelese = async ({ newOrder, data }) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+
+        INSERT INTO WYDANIA (KLEINT_ID, ILOSC, WAGA, ODBIORCA, KOD_POCZTOWY, MIEJSCOWOSC, ADRES, KRAJ, DANE_AUTA)
+        VALUES (
+        ${newOrder.KLIENT_ID},
+        ${newOrder.ILOSC},
+        ${newOrder.WAGA},
+        '${newOrder.ODBIORCA}',
+        '${newOrder.KOD_POCZTOWY}',
+        '${newOrder.MIEJSCOWOSC}',
+        '${newOrder.ADRES}',
+        '${newOrder.KRAJ}',
+        '${newOrder.DANE_AUTA}'
+        )
+
+        DECLARE @ID_WYDANIA INT = (SELECT TOP 1 ID FROM WYDANIA WHERE KLEINT_ID = ${newOrder.KLIENT_ID} ORDER BY ID DESC)
+        
+        INSERT INTO WYDANIA_SZCZEGOLY (WYDANIE_ID, KOD_PROCUKTU, NAZWA_PRODUKTU, ILOSC, WAGA, PAKOWANIE, UWAGI, KOD_KRESKOWY) VALUES 
+            ${data.map(a => `( @ID_WYDANIA, '${a.KOD_PRODUKTU}', '${a.NAZWA_PRODUKTU}', ${a.ILOSC},${a.WAGA},'${a.PAKOWANIE}','${a.UWAGI}', ${a.KOD_KRESKOWY})`)}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    }
+};
+
+const setWorkerToRelese = async (data) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        update WYDANIA
+        set OBSLUGA = '${data.idWorker}',
+            OBSLUGA_START = GETDATE()
+        where ID = '${data.idOrder}'
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const clearWorkerFromRelese = async (data) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        update WYDANIA
+        set OBSLUGA = null,
+            OBSLUGA_START = null
+        where ID = ${data.idOrder}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const deleteRelese = async (data) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        delete from WYDANIA
+        where ID = ${data.idOrder}
+
+        delete from WYDANIA_SZCZEGOLY
+        WHERE WYDANIE_ID = ${data.idOrder}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
 
 module.exports = {
     validateLogIn,
@@ -373,5 +460,10 @@ module.exports = {
     deleteCarrier,
     apiFetchStocks,
     apiFetchStocksDetails,
-    apiFetchRelesesOrders
+    apiFetchRelesesOrders,
+    fetchNewRelesesDetails,
+    setNewRelese,
+    deleteRelese,
+    clearWorkerFromRelese,
+    setWorkerToRelese
 };

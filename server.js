@@ -102,9 +102,34 @@ app.post('/apiFetchStocksDetails', async(req,res) => {
     res.send(result.recordset)
 });
 
-app.post('/apiFetchRelesesOrders', async(req,res) => {
+app.get('/apiFetchRelesesOrders', async(req,res) => {
     const result = await dbOperation.apiFetchRelesesOrders(req.body)
     res.send(result.recordset)
+});
+
+app.get('/apiFetchNewRelesesDetails', async(req, res) => {
+    const result = await dbOperation.fetchNewRelesesDetails(req.body);
+    res.send(result.recordset)
+});
+
+app.post('/setNewReleses', async(req,res) => {
+    dbOperation.setNewRelese(req.body)
+    res.status(200).json({ success: true })
+});
+
+app.post('/setWorkerToRelese', async(req,res) => {
+    dbOperation.setWorkerToRelese(req.body)
+    res.status(200).json({ success: true })
+});
+
+app.post('/clearWorkerFromRelese', async(req,res) => {
+    dbOperation.clearWorkerFromRelese(req.body)
+    res.status(200).json({ success: true })
+});
+
+app.post('/deleteRelese', async(req,res) => {
+    dbOperation.deleteRelese(req.body)
+    res.status(200).json({ success: true })
 });
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
