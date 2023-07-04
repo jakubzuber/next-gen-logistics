@@ -68,6 +68,11 @@ const WhPlaces = () => {
                 header: 'Opis',
                 size: 600,
             },
+            {
+                accessorKey: 'KOLEJNOSC',
+                header: 'Kolejnosc',
+                size: 200,
+            },
         ],
         [],
     );

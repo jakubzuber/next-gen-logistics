@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledNewDataContainer = styled.div`
-    background-color: #1a1e75;
+    background-color: #1266d4;
     padding: 30px;
     max-width: 1400px;
     min-width: 30%;
@@ -20,12 +20,12 @@ export const GridContainer = styled.div`
 `;
 
 export const Plus = styled.div`
-    color: green;
+    color: #12df0b;
     font-size: 30px;
     font-weight: 600;
 
     :hover {
-        color: #36d630;
+        color: #96dd94;
         cursor: pointer;
     }
 `;
@@ -36,7 +36,7 @@ export const Minus = styled.div`
     font-weight: 600;
 
     :hover {
-        color: #c76a6a;
+        color: #e29d9d;
         cursor: pointer;
     }
 `;

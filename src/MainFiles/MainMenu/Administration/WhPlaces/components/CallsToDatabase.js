@@ -1,5 +1,4 @@
 export const deletePlace = async (props) => {
-    console.log(props)
     await fetch('/deletePlace', {
         method: 'POST',
         headers: {

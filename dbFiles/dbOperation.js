@@ -204,8 +204,55 @@ const setNewPlaces = async ({ data }) => {
         let pool = await sql.connect(config);
         await pool.request().query(`
 
-        INSERT INTO WH_PLACES (KOD_KRESKOWY, OPIS, KOD) VALUES 
-        ${data.map(a => `('${a.symbol}', '${a.discription}', convert(numeric(12,0),rand() * 899999999999) + 100000000000)`)}
+        declare @session int = CAST(RAND() * 1000000 AS INT)
+
+        drop table if exists #tmp
+
+        create table #tmp (
+            kodK varchar(200),
+            opis varchar(400),
+            kod varchar(200),
+            kol int,
+        )
+
+        insert into #tmp (kodk, opis, kod, kol) values
+        ${data.map(row => 
+            `('${row.symbol}', '${row.discription}', convert(numeric(12,0),rand() * 899999999999) + 100000000000, ${row.place})`    
+        )}
+
+        insert into tmp_wh_places (OPIS, OPIS_DOD, KOD, KOL, COUNT, SESSION)
+        select
+        kodK,
+        opis,
+        kod,
+        kol,
+        ROW_NUMBER() OVER(ORDER BY kod DESC),
+        @session
+        from #tmp
+
+        declare @counter int = (select top 1 COUNT from tmp_wh_places where SESSION = @session order by COUNT desc)
+
+        while @counter > 0
+        begin
+            update WH_PLACES
+            set KOLEJNOSC = KOLEJNOSC + 1
+            where KOLEJNOSC >= (select top 1 KOL from tmp_wh_places where COUNT = @counter and SESSION = @session)
+
+            insert into WH_PLACES (KOD_KRESKOWY, OPIS, KOD, KOLEJNOSC)
+            select
+            OPIS,
+            OPIS_DOD,
+            KOD,
+            KOL
+            from tmp_wh_places
+            where COUNT = @counter and SESSION = @session
+
+            set @counter = @counter - 1
+        end
+
+        delete from tmp_wh_places
+        where SESSION = @session
+        
         `)
     }
     catch (error) {
@@ -217,8 +264,16 @@ const deletePlace = async (data) => {
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
+
+        declare @kolToRemove int = (select kolejnosc from WH_PLACES where id = ${data.idPlace})
+        
         delete from WH_PLACES
         where ID = ${data.idPlace}
+
+        update WH_PLACES
+        set kolejnosc = kolejnosc - 1
+        where kolejnosc > @kolToRemove
+
         `)
     }
     catch (error) {
@@ -230,7 +285,7 @@ const getWhCarriers =  async () => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
-        select * from WH_CARRIERS
+        select * from WH_CARRIERS ORDER BY KOLEJNOSC
         `)
         return data
     }
@@ -441,6 +496,19 @@ const deleteRelese = async (data) => {
     };
 };
 
+const fetchTransfers = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT * FROM TRANSFERS
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
 module.exports = {
     validateLogIn,
     setNewPasswrod,
@@ -465,5 +533,6 @@ module.exports = {
     setNewRelese,
     deleteRelese,
     clearWorkerFromRelese,
-    setWorkerToRelese
+    setWorkerToRelese,
+    fetchTransfers
 };

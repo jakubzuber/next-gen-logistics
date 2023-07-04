@@ -29,6 +29,17 @@ const NewWhPlace = ({ modal, closeModal }) => {
     const [discription8, setDiscription8] = useState();
     const [discription9, setDiscription9] = useState();
 
+    const [place0, setPlace0] = useState();
+    const [place1, setPlace1] = useState();
+    const [place2, setPlace2] = useState();
+    const [place3, setPlace3] = useState();
+    const [place4, setPlace4] = useState();
+    const [place5, setPlace5] = useState();
+    const [place6, setPlace6] = useState();
+    const [place7, setPlace7] = useState();
+    const [place8, setPlace8] = useState();
+    const [place9, setPlace9] = useState();
+
 
     const assignSymbolFunction = ({ value, index }) => {
         switch (index) {
@@ -82,6 +93,32 @@ const NewWhPlace = ({ modal, closeModal }) => {
         };
     };
 
+    const assignPlaceFunction = ({ value, index }) => {
+        switch (index) {
+            case 0: setPlace0(value);
+                break;
+            case 1: setPlace1(value);
+                break;
+            case 2: setPlace2(value);
+                break;
+            case 3: setPlace3(value);
+                break;
+            case 4: setPlace4(value);
+                break;
+            case 5: setPlace5(value);
+                break;
+            case 6: setPlace6(value);
+                break;
+            case 7: setPlace7(value);
+                break;
+            case 8: setPlace8(value);
+                break;
+            case 9: setPlace9(value);
+                break;
+            default: setPlace0('')
+        };
+    };
+
     const onClose = () => {
         closeModal()
         setPlaces(1)
@@ -105,16 +142,16 @@ const NewWhPlace = ({ modal, closeModal }) => {
 
     const onAccept = () => {
         const allData = [
-            { symbol: symbol0, discription: discription0 },
-            { symbol: symbol1, discription: discription1 },
-            { symbol: symbol2, discription: discription2 },
-            { symbol: symbol3, discription: discription3 },
-            { symbol: symbol4, discription: discription4 },
-            { symbol: symbol5, discription: discription5 },
-            { symbol: symbol6, discription: discription6 },
-            { symbol: symbol7, discription: discription7 },
-            { symbol: symbol8, discription: discription8 },
-            { symbol: symbol9, discription: discription9 },
+            { symbol: symbol0, discription: discription0, place: place0 },
+            { symbol: symbol1, discription: discription1, place: place1 },
+            { symbol: symbol2, discription: discription2, place: place2 },
+            { symbol: symbol3, discription: discription3, place: place3 },
+            { symbol: symbol4, discription: discription4, place: place4 },
+            { symbol: symbol5, discription: discription5, place: place5 },
+            { symbol: symbol6, discription: discription6, place: place6 },
+            { symbol: symbol7, discription: discription7, place: place7 },
+            { symbol: symbol8, discription: discription8, place: place8 },
+            { symbol: symbol9, discription: discription9, place: place9 },
         ];
         const dataToUpload = allData.slice(0, places)
         sendNewPlacesToDatabase(dataToUpload)
@@ -132,7 +169,7 @@ const NewWhPlace = ({ modal, closeModal }) => {
                     </GridContainer>
                     <form onSubmit={onAccept} >
                         {Array.from({ length: places }).map((v, i) =>
-                            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+                            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
                                 <Input 
                                 name="123" 
                                 minLength={9} 
@@ -147,6 +184,12 @@ const NewWhPlace = ({ modal, closeModal }) => {
                                 required 
                                 onChange={({ target }) => assignDiscryptionFunction({ value: target.value, index: i })} 
                                 placeholder="OPIS"
+                                ></Input>
+                                <Input 
+                                name="321" 
+                                required 
+                                onChange={({ target }) => assignPlaceFunction({ value: target.value, index: i })} 
+                                placeholder="Kolejność"
                                 ></Input>
                             </div>
                         )}
