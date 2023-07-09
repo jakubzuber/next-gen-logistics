@@ -58,7 +58,12 @@ const WhCarriers = () => {
             {
                 accessorKey: 'KOD_KRESKOWY',
                 header: 'Kod kreskowy',
-                size: 2000,
+                size: 500,
+            },
+            {
+                accessorKey: 'OPIS',
+                header: 'Opis',
+                size: 500,
             },
         ],
         [],

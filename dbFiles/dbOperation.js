@@ -285,7 +285,11 @@ const getWhCarriers =  async () => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
-        select * from WH_CARRIERS ORDER BY KOLEJNOSC
+        select
+        WC.ID,
+        WC.KOD_KRESKOWY,
+        WP.OPIS
+        FROM WH_CARRIERS WC LEFT JOIN WH_PLACES WP ON WC.PLACE_ID = WP.ID
         `)
         return data
     }
@@ -484,8 +488,53 @@ const deleteRelese = async (data) => {
     try {
         let pool = await sql.connect(config);
         await pool.request().query(`
+
+        if exists (select 1 from WYDANIA_POZYCJE where WYDANIE_ID = ${data.idOrder})
+            begin
+	            select 
+	            ROW_NUMBER() OVER(ORDER BY id DESC) pozycje,
+	            *
+	            into #tmp
+	            from WYDANIA_POZYCJE 
+	            where WYDANIE_ID = ${data.idOrder}
+
+	            declare @counter int = (select top 1 pozycje from #tmp order by pozycje desc)
+
+	            while @counter > 0
+		            begin
+			            if exists (select 1 from STANY_MAGAZYNOWE where id = (select top 1 hist_whPlace from #tmp where pozycje = @counter))
+                            begin
+                                update sm
+                                set sm.ILOSC = sm.ILOSC + (select ILOSC from #tmp where pozycje = @counter)
+                                from STANY_MAGAZYNOWE sm
+                                where sm.ID = (select top 1 hist_whPlace from #tmp where pozycje = @counter)
+                            end 
+			            else
+				            begin
+					            insert into STANY_MAGAZYNOWE (PALETA_NUMER, KOD_PRODUKTU, NAZWA_PRODUKTU, ILOSC, WAGA, KLIENT_ID, KLIENT_NAZWA, W_TRAKCIE, KOD_KRESKOWY)
+					            select
+					            hist_oldPallet,
+					            KOD,
+					            NAZWA_PRODUKTU,
+					            ILOSC,
+					            1,
+					            hist_klientId,
+					            hist_klientNazwa,
+					            0,
+					            KOD_KREKOSWY_TOWARU
+					            from #tmp
+					            where pozycje = @counter 
+				            end
+
+                        set @counter = @counter - 1
+		            end
+            end
+
         delete from WYDANIA
         where ID = ${data.idOrder}
+
+        delete from WYDANIA_POZYCJE
+        WHERE WYDANIE_ID = ${data.idOrder}
 
         delete from WYDANIA_SZCZEGOLY
         WHERE WYDANIE_ID = ${data.idOrder}
