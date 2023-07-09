@@ -558,6 +558,92 @@ const fetchTransfers = async () => {
     };
 };
 
+const getClients = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        select *
+        from KLIENCI
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const addClient = async ({client}) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        INSERT INTO KLIENCI (SYMBOL, NAZWA, NIP, KOD_POCZTOWY, MIEJSCOWOSC, ADRES, KRAJ, ADRES_EMAIL, TELEFON)
+        VALUES ('${client.symbol}','${client.nazwa}','${client.nip}','${client.kod}','${client.miejscowosc}','${client.adres}','${client.kraj}','${client.email}', '${client.telefon}')
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const deleteClient = async ({idClient}) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        delete from KLIENCI
+        where id = ${idClient}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const fetchUsers = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT
+        ID,
+        NAME,
+        SURNAME,
+        LOGIN,
+        CASE WHEN ONE_TIME_PASSWORD = 1 THEN 'Tak' ELSE 'Nie' END ONE_TIME_PASSWORD,
+        CASE WHEN USER_FOR = 1 THEN 'Aplikacja webowa' ELSE 'Aplikacja mobilna' END USER_FOR
+        FROM USERS
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const addUser = async ({user}) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        insert into USERS (NAME, SURNAME, LOGIN, PASSWORD, ONE_TIME_PASSWORD, USER_FOR)
+        values ('${user.imie}','${user.nazwisko}','${user.login}','${user.haslo}',1 ,'${user.do}')
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const deleteUser= async ({userId}) => {
+    try {
+        let pool = await sql.connect(config);
+        await pool.request().query(`
+        delete from USERS
+        where id = ${userId}
+        `)
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
 module.exports = {
     validateLogIn,
     setNewPasswrod,
@@ -583,5 +669,11 @@ module.exports = {
     deleteRelese,
     clearWorkerFromRelese,
     setWorkerToRelese,
-    fetchTransfers
+    fetchTransfers,
+    getClients,
+    addClient,
+    deleteClient,
+    fetchUsers,
+    addUser,
+    deleteUser
 };

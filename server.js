@@ -137,5 +137,35 @@ app.get('/apiTransfers', async(req, res) => {
     res.send(result.recordset)
 });
 
+app.get('/getClients', async(req, res) => {
+    const result = await dbOperation.getClients(req.body);
+    res.send(result.recordset)
+});
+
+app.post('/addClient', async(req,res) => {
+    dbOperation.addClient(req.body)
+    res.status(200).json({ success: true })
+});
+
+app.post('/deleteClient', async(req,res) => {
+    dbOperation.deleteClient(req.body)
+    res.status(200).json({ success: true })
+});
+
+app.get('/fetchUsers', async(req, res) => {
+    const result = await dbOperation.fetchUsers(req.body);
+    res.send(result.recordset)
+});
+
+app.post('/addUser', async(req,res) => {
+    dbOperation.addUser(req.body)
+    res.status(200).json({ success: true })
+});
+
+app.post('/deleteUser', async(req,res) => {
+    dbOperation.deleteUser(req.body)
+    res.status(200).json({ success: true })
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

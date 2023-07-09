@@ -9,6 +9,8 @@ import stokcDetailsSlice from "./MainFiles/MainMenu/Warehouse/Stocks/components/
 import relesesSlice from "./MainFiles/MainMenu/Warehouse/Releases/relesesSlice";
 import newRelesesDetailsSlice from "./MainFiles/MainMenu/Warehouse/Releases/newRelesesDetailsSlice";
 import transfersSlice from "./MainFiles/MainMenu/Warehouse/Transfers/transfersSlice";
+import clientsSliceList from "./MainFiles/MainMenu/Administration/Clients/clientsSliceList";
+import usersSlice from "./MainFiles/MainMenu/Administration/Users/usersSlice";
 
 
 export default configureStore({
@@ -22,6 +24,8 @@ export default configureStore({
         stocksDetails: stokcDetailsSlice,
         releses: relesesSlice,
         newRelesesDetails: newRelesesDetailsSlice,
-        transfers: transfersSlice
+        transfers: transfersSlice,
+        clientsList: clientsSliceList,
+        users: usersSlice,
     }
 });
