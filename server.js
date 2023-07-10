@@ -177,5 +177,15 @@ app.get('/fetchHistoryDetailsReleases', async(req, res) => {
     res.send(result.recordset)
 });
 
+app.get('/fetchHistoryOrders', async(req, res) => {
+    const result = await dbOperation.fetchHistoryOrders(req.body);
+    res.send(result.recordset)
+});
+
+app.get('/fetchHistoryDetailsOrders', async(req, res) => {
+    const result = await dbOperation.fetchHistoryDetailsOrders(req.body);
+    res.send(result.recordset)
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

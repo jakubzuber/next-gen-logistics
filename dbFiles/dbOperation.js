@@ -685,6 +685,51 @@ const fetchHistoryDetailsReleases = async () => {
     };
 };
 
+const fetchHistoryOrders = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT TOP (1000) [ID_PRZYJECIA_HIST]
+        ,[PRZYJĘCIE_ID]
+        ,[ILOSC]
+        ,[WAGA]
+        ,[NADAWCA]
+        ,[KOD_POCZTOWY]
+        ,[MIEJSCOWOSC]
+        ,[ADRES]
+        ,[KRAJ]
+        ,[UWAGI]
+        ,[DANE_AUTA]
+        ,[OBSLUGA]
+        ,[OBSLUGA_START]
+        ,[OBSLUGA_KONIEC]
+        ,[STAN]
+        ,[NR_WLASNY]
+        ,(SELECT TOP 1 K.SYMBOL FROM KLIENCI K WHERE K.ID = KLIENT_ID) KLIENT
+        FROM [NEXT_GEN_SQL].[dbo].[PRZYJECIA_HIST]
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const fetchHistoryDetailsOrders = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        select *
+        from PRZYJECIA_SZCZEGOLY_HIST
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+
 module.exports = {
     validateLogIn,
     setNewPasswrod,
@@ -718,5 +763,7 @@ module.exports = {
     addUser,
     deleteUser,
     fetchHistoryReleases,
-    fetchHistoryDetailsReleases
+    fetchHistoryDetailsReleases,
+    fetchHistoryOrders,
+    fetchHistoryDetailsOrders
 };

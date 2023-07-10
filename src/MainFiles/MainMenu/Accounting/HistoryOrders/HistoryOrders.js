@@ -1,9 +1,221 @@
 
-const HistoryOrders = () => {
+/* eslint-disable */
+import React, { useReducer, useRef, useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { Topic } from "../../styled";
+import { Box, Toolbar } from "@mui/material";
+import { MRT_Localization_PL } from 'material-react-table/locales/pl';
+import {
+    MaterialReactTable,
+    MRT_FullScreenToggleButton,
+    MRT_GlobalFilterTextField,
+    MRT_ShowHideColumnsButton,
+    MRT_TablePagination,
+    MRT_ToggleDensePaddingButton,
+    MRT_ToggleFiltersButton,
+    MRT_ToolbarAlertBanner,
+} from 'material-react-table';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import LeftClickMenu from './components/LeftClickMenu';
+import { fetchClients } from '../../Slices/clientsSlice';
+import { fetchHistoryOrders, selectHistOrders } from './historyOrdersSlice';
+import { fetchHistoryDetailsOrders } from './components/historyReleasesDetailsSlice';
+
+const HistoryReleases = () => {
+    const dispatch = useDispatch();
+    const { histOrders } = useSelector(selectHistOrders);
+    const [modal, setModal] = useState(false);
+
+    const [rowSelection, setRowSelection] = useState({});
+    const tableInstanceRef = useRef(null);
+    const rerender = useReducer(() => ({}), {})[1];
+    const [columnVisibility, setColumnVisibility] = useState({});
+    const [density, setDensity] = useState('compact');
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+    const [showColumnFilters, setShowColumnFilters] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchHistoryOrders())
+        dispatch(fetchClients())
+        dispatch(fetchHistoryDetailsOrders())
+    }, [dispatch]);
+
+    const initialDetails = {
+        show: false,
+        orderId: null,
+        client: null
+    };
+
+    const [details, setDetails] = useState(initialDetails);
+
+    const openDetials = ({ orderId, client }) => {
+        setDetails({ show: true, orderId: orderId, client: client })
+    };
+
+    const closeDetils = () => {
+        setDetails({ show: false, id: null })
+    };
+
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: 'ID_PRZYJECIA_HIST',
+                header: 'Id',
+                size: 50,
+            },
+            {
+                accessorKey: 'PRZYJĘCIE_ID',
+                header: 'Przyjęcie id',
+                size: 100,
+            },
+            {
+                accessorKey: 'KLIENT',
+                header: 'Klient',
+                size: 100,
+            },
+            {
+                accessorKey: 'ILOSC',
+                header: 'Ilosc',
+                size: 100,
+            },
+            {
+                accessorKey: 'WAGA',
+                header: 'Waga',
+                size: 100,
+            },
+            {
+                accessorKey: 'NADAWCA',
+                header: 'Nadawca',
+                size: 100,
+            },
+            {
+                accessorKey: 'OBSLUGA',
+                header: 'Obsługiwał',
+                size: 100,
+            },
+        ],
+        [],
+    );
 
     return (
-            <p>Historia przyjęć</p>
+        <>
+            <Topic>HISTORIA PRZYJĘĆ</Topic>
+            <Box sx={{ borderRadius: '7px', backgroundColor: '#1266d4' }}>
+                {tableInstanceRef.current && (
+                    <Toolbar
+                        sx={(theme) => ({
+                            backgroundColor: '#1266d4',
+                            borderRadius: '4px',
+                            display: 'flex',
+                            flexDirection: {
+                                xs: 'column',
+                                lg: 'row',
+                            },
+                            gap: '1rem',
+                            justifyContent: 'space-between',
+                            p: '1.5rem 0',
+                            height: '1vh'
+                        })}
+                    >
+                        <div style={{ backgroundColor: 'white', borderRadius: '7px' }} ><MRT_GlobalFilterTextField table={tableInstanceRef.current} /></div>
+                        <Box>
+                        </Box>
+                        <Box sx={{ display: 'flex' }}>
+                            <MRT_ToolbarAlertBanner
+                                stackAlertBanner
+                                table={tableInstanceRef.current}
+                            />
+                            <MRT_ToggleFiltersButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
+                            <MRT_ShowHideColumnsButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
+                            <MRT_ToggleDensePaddingButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
+                            <MRT_FullScreenToggleButton sx={{ color: 'white' }} table={tableInstanceRef.current} />
+                        </Box>
+                    </Toolbar>
+                )}
+                <MaterialReactTable
+                    localization={MRT_Localization_PL}
+                    columns={columns}
+                    data={histOrders}
+                    enableColumnOrdering={false}
+                    enableBottomToolbar={false}
+                    muiTableBodyRowProps={({ row }) => ({
+                        onClick: () => { openDetials({ orderId: row.original.PRZYJĘCIE_ID, client: row.original.KLIENT }) },
+                        hover: false,
+                        sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1457ad' } }
+                    })}
+                    muiTableBodyProps={{ sx: { backgroundColor: '#1266d4', color: 'white' } }}
+                    muiTableBodyCellProps={{ sx: { color: 'white' } }}
+                    muiTableHeadRowProps={{ sx: { backgroundColor: '#1266d4' } }}
+                    muiTableHeadCellProps={{ sx: { color: 'white' } }}
+                    muiSelectCheckboxProps={{ sx: { color: 'white' } }}
+                    muiSelectAllCheckboxProps={{ sx: { color: 'white' } }}
+                    muiTableHeadCellColumnActionsButtonProps={{ sx: { color: 'white' } }}
+                    muiTableHeadCellFilterTextFieldProps={{ sx: { backgroundColor: 'white', borderRadius: '7px', padding: '2px' } }}
+                    enableColumnResizing
+                    
+                    positionActionsColumn={'last'}
+                    enableRowSelection
+                    getRowId={(row) => row.KOD}
+                    enableTopToolbar={false}
+                    icons={{
+                        MoreHorizIcon: (props) => <MoreHorizIcon sx={{ color: 'white' }} {...props} />
+                    }}
+                    initialState={{ showGlobalFilter: true }}
+                    onColumnVisibilityChange={(updater) => {
+                        setColumnVisibility((prev) =>
+                            updater instanceof Function ? updater(prev) : updater,
+                        );
+                        queueMicrotask(rerender);
+                    }}
+                    onDensityChange={(updater) => {
+                        setDensity((prev) =>
+                            updater instanceof Function ? updater(prev) : updater,
+                        );
+                        queueMicrotask(rerender);
+                    }}
+                    onRowSelectionChange={(updater) => {
+                        setRowSelection((prev) =>
+                            updater instanceof Function ? updater(prev) : updater,
+                        );
+                        queueMicrotask(rerender);
+                    }}
+                    onPaginationChange={(updater) => {
+                        setPagination((prev) =>
+                            updater instanceof Function ? updater(prev) : updater,
+                        );
+                        queueMicrotask(rerender);
+                    }}
+                    onShowColumnFiltersChange={(updater) => {
+                        setShowColumnFilters((prev) =>
+                            updater instanceof Function ? updater(prev) : updater,
+                        );
+                        queueMicrotask(rerender);
+                    }}
+                    state={{
+                        columnVisibility,
+                        density,
+                        rowSelection,
+                        pagination,
+                        showColumnFilters,
+                    }}
+                    tableInstanceRef={tableInstanceRef}
+                />
+                {tableInstanceRef.current && (
+                    <Toolbar
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            flexDirection: 'column',
+                        }}
+                    >
+                        <div style={{ backgroundColor: 'white', margin: 20, borderRadius: 20 }} ><MRT_TablePagination table={tableInstanceRef.current} /></div>
+
+                    </Toolbar>
+                )}
+            </Box>
+           <LeftClickMenu modal={details} closeModal={closeDetils}/>
+        </>
     );
 };
 
-export default HistoryOrders;
+export default HistoryReleases;

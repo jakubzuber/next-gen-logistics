@@ -3,13 +3,13 @@ import { Table, Topic } from "../../../styled";
 import { StyledNewDataContainer } from './styled'
 import { useSelector } from "react-redux";
 import { selectClients } from "../../../Slices/clientsSlice";
-import { selectHistOrders } from "../historyReleasesSlice";
+import { selectHistOrders } from "../historyOrdersSlice";
 import { selectHistOrdersDetails } from "./historyReleasesDetailsSlice";
 
 const LeftClickMenu = ({ modal, closeModal }) => {
     const { clients } = useSelector(selectClients);
-    const { histReleases } = useSelector(selectHistOrders);
-    const { histReleasesDetails} = useSelector(selectHistOrdersDetails);
+    const { histOrders } = useSelector(selectHistOrders);
+    const { histOrderDetails } = useSelector(selectHistOrdersDetails);
 
     const onClose = () => {
         closeModal()
@@ -24,7 +24,7 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                         <p>Dane klienta:</p>
                         <Table>
                         {clients.filter(clients => clients.SYMBOL === modal.client).map(client => (
-                                <tbody key={client.ID}>
+                                <tbody>
                                     <tr>
                                         <th>Nazwa:</th>
                                         <td>{client.NAZWA}</td>
@@ -44,7 +44,7 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                     <div>
                         <p>Szczególy obsługi:</p>
                         <Table>
-                            {histReleases.filter(histReleases => histReleases.WYDANIE_ID === modal.orderId).map(order => (
+                        {histOrders.filter(histOrders => histOrders.PRZYJĘCIE_ID === modal.orderId).map(order => (
                                 <tbody key={order.ID}>
                                     <tr>
                                         <th>Magazynier:</th>
@@ -52,7 +52,7 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                                     </tr>
                                     <tr>
                                         <th>Czas rozpoczęcia:</th>
-                                        <td>{order.OBLUSG_START}</td>
+                                        <td>{order.OBSLUGA_START}</td>
                                     </tr>
                                     <tr>
                                         <th>Czas zakończenia:</th>
@@ -63,17 +63,17 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                         </Table>
                     </div>
                     <div>
-                        <p>Dane odbiorcy:</p>
+                        <p>Dane dostawcy:</p>
                         <Table>
-                            {histReleases.filter(histReleases => histReleases.WYDANIE_ID === modal.orderId).map(order => (
+                        {histOrders.filter(histOrders => histOrders.PRZYJĘCIE_ID === modal.orderId).map(order => (
                                 <tbody key={order.ID}>
                                     <tr>
                                         <th>Nazwa:</th>
-                                        <td>{order.ODBIORCA}</td>
+                                        <td>{order.NADAWCA}</td>
                                     </tr>
                                     <tr>
                                         <th>Adres:</th>
-                                        <td>{order.ADERES}</td>
+                                        <td>{order.ADRES}</td>
                                     </tr>
                                     <tr>
                                         <th>Miejscowość:</th>
@@ -86,10 +86,10 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                     <div>
                         <p>Szczegóły operacji:</p>
                         <ul>
-                            {histReleasesDetails.filter(histReleasesDetails => histReleasesDetails.WYDANIE_ID === modal.orderId).map(orderDetails => (
+                        {histOrderDetails.filter(histOrderDetails => histOrderDetails.PRZYJCIE_ID === modal.orderId).map(orderDetails => (
                                 <>
                                     <li key={orderDetails.ID}>
-                                        {orderDetails.ILOSC}szt. {orderDetails.KOD} - Paleta: {orderDetails.PALETA}
+                                        {orderDetails.ILOSC}szt. {orderDetails.KOD_PRODUKTU} 
                                     </li>
                                 </>
                             ))}

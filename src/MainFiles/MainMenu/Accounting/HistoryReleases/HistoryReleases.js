@@ -80,7 +80,7 @@ const HistoryReleases = () => {
             },
             {
                 accessorKey: 'WAGA',
-                header: 'Hasło jednorazowe',
+                header: 'Waga',
                 size: 100,
             },
             {
@@ -99,13 +99,7 @@ const HistoryReleases = () => {
 
     return (
         <>
-            <Topic>MIEJSCA MAGAZYNOWE</Topic>
-            <FunctionButtons>
-                <StyledButton
-                    onClick={() => toggleModal()}>
-                    Nowy użytkownik
-                </StyledButton>
-            </FunctionButtons>
+            <Topic>HISTORIA WYDAŃ</Topic>
             <Box sx={{ borderRadius: '7px', backgroundColor: '#1266d4' }}>
                 {tableInstanceRef.current && (
                     <Toolbar
@@ -145,7 +139,7 @@ const HistoryReleases = () => {
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
                     muiTableBodyRowProps={({ row }) => ({
-                        onClick: () => { openDetials({ orderId: row.original.WYDANIE_ID, client: row.original.KLIENT }) },
+                        onClick: () => { openDetials({ orderId: row.original.PRZYJECIE_ID, client: row.original.KLIENT }) },
                         hover: false,
                         sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1457ad' } }
                     })}

@@ -13,6 +13,8 @@ import clientsSliceList from "./MainFiles/MainMenu/Administration/Clients/client
 import usersSlice from "./MainFiles/MainMenu/Administration/Users/usersSlice";
 import historyReleasesSlice from "./MainFiles/MainMenu/Accounting/HistoryReleases/historyReleasesSlice";
 import historyReleasesDetailsSlice from "./MainFiles/MainMenu/Accounting/HistoryReleases/components/historyReleasesDetailsSlice";
+import historyOrdersSlice from "./MainFiles/MainMenu/Accounting/HistoryOrders/historyOrdersSlice";
+import historyOrdersDetailsSlice from './MainFiles/MainMenu/Accounting/HistoryOrders/components/historyReleasesDetailsSlice'
 
 
 export default configureStore({
@@ -30,6 +32,8 @@ export default configureStore({
         clientsList: clientsSliceList,
         users: usersSlice,
         histReleases: historyReleasesSlice,
-        histReleasesDetails: historyReleasesDetailsSlice
+        histReleasesDetails: historyReleasesDetailsSlice,
+        histOrders: historyOrdersSlice,
+        histOrderDetails: historyOrdersDetailsSlice
     }
 });
