@@ -139,7 +139,7 @@ const HistoryReleases = () => {
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
                     muiTableBodyRowProps={({ row }) => ({
-                        onClick: () => { openDetials({ orderId: row.original.PRZYJECIE_ID, client: row.original.KLIENT }) },
+                        onClick: () => { openDetials({ orderId: row.original.WYDANIE_ID, client: row.original.KLIENT }) },
                         hover: false,
                         sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1457ad' } }
                     })}

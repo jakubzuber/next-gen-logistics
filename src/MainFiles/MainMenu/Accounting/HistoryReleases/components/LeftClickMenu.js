@@ -45,7 +45,7 @@ const LeftClickMenu = ({ modal, closeModal }) => {
                         <p>Szczególy obsługi:</p>
                         <Table>
                             {histReleases.filter(histReleases => histReleases.WYDANIE_ID === modal.orderId).map(order => (
-                                <tbody key={order.ID}>
+                                <tbody>
                                     <tr>
                                         <th>Magazynier:</th>
                                         <td>{order.OBSLUGA}</td>
