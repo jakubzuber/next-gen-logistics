@@ -98,7 +98,7 @@ const getWhWorkers = async () => {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query(`
-        SELECT ID_USER, CONCAT(NAME, ' ', SURNAME) SYMBOL FROM USERS WHERE USER_FOR = 2
+        SELECT ID, CONCAT(NAME, ' ', SURNAME) SYMBOL FROM USERS WHERE USER_FOR = 2
         `)
         return data
     }

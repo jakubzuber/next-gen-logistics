@@ -238,7 +238,7 @@ const NewOrders = () => {
                             >
                                 <option key={0} value="" >Wybierz magazyniera</option>
                                 {whWorker.map(worker => (
-                                    <option value={worker.SYMBOL} key={worker.ID_USER}>{worker.SYMBOL}</option>
+                                    <option value={worker.SYMBOL} key={worker.ID}>{worker.SYMBOL}</option>
                                 ))}
                             </StyledSelect>
                         </MenuItem>
