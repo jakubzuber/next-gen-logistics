@@ -2,7 +2,7 @@
 const HistoryOrders = () => {
 
     return (
-            <p>pRZYJĘCIA</p>
+            <p>Historia przyjęć</p>
     );
 };
 
