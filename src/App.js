@@ -8,12 +8,12 @@ import NewOrdersList from './MainFiles/MainMenu/Warehouse/NewOrders/NewOrdersLis
 import Releases from "./MainFiles/MainMenu/Warehouse/Releases/Releases";
 import Stocks from "./MainFiles/MainMenu/Warehouse/Stocks/Stocks";
 import Transfers from "./MainFiles/MainMenu/Warehouse/Transfers/Transfers";
-import Invoices from "./MainFiles/MainMenu/Accounting/Invoices/Invoices";
-import ToInvoice from "./MainFiles/MainMenu/Accounting/ToInvoice/ToInvoice";
 import Clients from "./MainFiles/MainMenu/Administration/Clients/Clients";
 import Users from "./MainFiles/MainMenu/Administration/Users/Users";
 import WhPlaces from "./MainFiles/MainMenu/Administration/WhPlaces/WhPlaces";
 import WhCarriers from "./MainFiles/MainMenu/Administration/WhCarriers/WhCarriers";
+import HistoryOrders from "./MainFiles/MainMenu/Accounting/HistoryOrders/HistoryOrders"; 
+import HistoryReleases from "./MainFiles/MainMenu/Accounting/HistoryReleases/HistoryReleases";
 
 function App() {
   return (
@@ -28,8 +28,8 @@ function App() {
         <Route path="releases" element={<Releases />} />
         <Route path="stocks" element={<Stocks />} />
         <Route path="transfers" element={<Transfers />} />
-        <Route path="invoices" element={<Invoices />} />
-        <Route path="to-invoice" element={<ToInvoice />} />
+        <Route path="invoices" element={<HistoryReleases />} />
+        <Route path="to-invoice" element={<HistoryOrders />} />
         <Route path="clients" element={<Clients />} />
         <Route path="users" element={<Users />} />
         <Route path="whplaces" element={<WhPlaces />} />

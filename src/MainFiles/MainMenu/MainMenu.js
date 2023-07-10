@@ -20,10 +20,8 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 
 const MainMenu = () => {
     const [collapsed, setCollapsed] = useState(true);
-    const [subCollapsed, setSubCollapsed] = useState(false);
 
     const onClickMenuIcon = () => {
-        setSubCollapsed(false)
         setCollapsed(true);
     };
 
@@ -31,9 +29,6 @@ const MainMenu = () => {
         setCollapsed(!collapsed)
     };
 
-    const onSubMenuClick = () => {
-        setSubCollapsed(!subCollapsed)
-    };
 
     return (
         <Main collapsed={collapsed}>
@@ -43,17 +38,17 @@ const MainMenu = () => {
                 <nav>
                     <ViewHeadlineIcon onClick={toogleMenu} />
                     <Menu>
-                        <StyledSubMenu onClick={() => onSubMenuClick()} open={subCollapsed} style={{ backgroundColor: 'transparent' }} icon={<WarehouseIcon />} label="Magazyn">
+                        <StyledSubMenu  style={{ backgroundColor: 'transparent' }} icon={<WarehouseIcon />} label="Magazyn">
                             <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<SouthIcon />} component={<Link to='admission' />}>Przyjęcia</StyledMenuItem>
                             <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<ArrowUpwardIcon />} component={<Link to='releases' />}>Wydania </StyledMenuItem>
                             <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<SyncAltIcon />} component={<Link to='transfers' />}>Przesunięcia </StyledMenuItem>
                             <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<CheckBoxOutlineBlankIcon />} component={<Link to='stocks' />}>Stany magazynowe</StyledMenuItem>
                         </StyledSubMenu>
-                        <StyledSubMenu open={subCollapsed} style={{ backgroundColor: 'transparent' }} icon={<MenuBookIcon />} label="Księgowość">
-                            <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<TaskIcon />} component={<Link to='invoices' />}>Wystawione fv</StyledMenuItem>
-                            <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<NoteAddIcon />} component={<Link to='to-invoice' />}>Fv do wystawienia</StyledMenuItem>
+                        <StyledSubMenu style={{ backgroundColor: 'transparent' }} icon={<MenuBookIcon />} label="Księgowość">
+                            <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<TaskIcon />} component={<Link to='invoices' />}>Historia wydań</StyledMenuItem>
+                            <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<NoteAddIcon />} component={<Link to='to-invoice' />}>Historia przyjęć</StyledMenuItem>
                         </StyledSubMenu>
-                        <StyledSubMenu open={subCollapsed} style={{ backgroundColor: 'transparent' }} icon={<SettingsApplicationsIcon />} label="Administracja">
+                        <StyledSubMenu style={{ backgroundColor: 'transparent' }} icon={<SettingsApplicationsIcon />} label="Administracja">
                             <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={< PersonOutlineIcon />} component={<Link to='users' />}>Użytkownicy</StyledMenuItem>
                             <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<AssignmentIndIcon />} component={<Link to='clients' />}>Klienci</StyledMenuItem>
                             <StyledMenuItem onClick={() => onClickMenuIcon()} style={{ backgroundColor: 'transparent' }} icon={<HorizontalSplitIcon />} component={<Link to='whplaces' />}>Miejsca Mag.</StyledMenuItem>
