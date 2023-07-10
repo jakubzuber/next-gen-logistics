@@ -167,5 +167,15 @@ app.post('/deleteUser', async(req,res) => {
     res.status(200).json({ success: true })
 });
 
+app.get('/fetchHistoryReleases', async(req, res) => {
+    const result = await dbOperation.fetchHistoryReleases(req.body);
+    res.send(result.recordset)
+});
+
+app.get('/fetchHistoryDetailsReleases', async(req, res) => {
+    const result = await dbOperation.fetchHistoryDetailsReleases(req.body);
+    res.send(result.recordset)
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`))
 

@@ -11,6 +11,8 @@ import newRelesesDetailsSlice from "./MainFiles/MainMenu/Warehouse/Releases/newR
 import transfersSlice from "./MainFiles/MainMenu/Warehouse/Transfers/transfersSlice";
 import clientsSliceList from "./MainFiles/MainMenu/Administration/Clients/clientsSliceList";
 import usersSlice from "./MainFiles/MainMenu/Administration/Users/usersSlice";
+import historyReleasesSlice from "./MainFiles/MainMenu/Accounting/HistoryReleases/historyReleasesSlice";
+import historyReleasesDetailsSlice from "./MainFiles/MainMenu/Accounting/HistoryReleases/components/historyReleasesDetailsSlice";
 
 
 export default configureStore({
@@ -27,5 +29,7 @@ export default configureStore({
         transfers: transfersSlice,
         clientsList: clientsSliceList,
         users: usersSlice,
+        histReleases: historyReleasesSlice,
+        histReleasesDetails: historyReleasesDetailsSlice
     }
 });

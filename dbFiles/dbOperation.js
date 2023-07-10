@@ -644,6 +644,47 @@ const deleteUser= async ({userId}) => {
     };
 };
 
+const fetchHistoryReleases = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        SELECT  [ID_WYDANIE_HIST]
+        ,[WYDANIE_ID]
+        ,(select top 1 SYMBOL from KLIENCI k where k.id = KLIENT_ID) KLIENT
+        ,[ILOSC]
+        ,[WAGA]
+        ,[ODBIORCA]
+        ,[KOD_POCZTOWY]
+        ,[MIEJSCOWOSC]
+        ,[ADERES]
+        ,[KRAJ]
+        ,[DANE_AUTA]
+        ,[OBSLUGA]
+        ,[OBLUSG_START]
+        ,[OBSLUGA_KONIEC]
+        FROM [NEXT_GEN_SQL].[dbo].[WYDANIA_HIST]
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
+const fetchHistoryDetailsReleases = async () => {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query(`
+        select *
+        from WYDANIA_POZYCJE_HIST
+        `)
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    };
+};
+
 module.exports = {
     validateLogIn,
     setNewPasswrod,
@@ -675,5 +716,7 @@ module.exports = {
     deleteClient,
     fetchUsers,
     addUser,
-    deleteUser
+    deleteUser,
+    fetchHistoryReleases,
+    fetchHistoryDetailsReleases
 };
