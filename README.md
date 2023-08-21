@@ -10,7 +10,7 @@ You can manage your warehouse resources by this web application with control of 
 You can add receipt of goods or realases, with historyztion functions.
 
 This appliaction allows you to create new clietns, stocs, wh places in the database with function to create new users for this appliaction and mobile one.
-The mobile application is a part of this procect: https://github.com/jakubzuber/barCodeScanner
+The mobile application is a part of this project: https://github.com/jakubzuber/barCodeScanner
 
 ![alt text for screen readers](/markdown_wms.png "Screen for wms application").
 
