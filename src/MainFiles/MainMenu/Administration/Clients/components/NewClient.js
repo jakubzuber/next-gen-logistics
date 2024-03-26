@@ -41,46 +41,44 @@ const NewClient = ({ modal, closeModal }) => {
                     <p>Dodanie nowego klienta do bazy</p>
                     <form onSubmit={onAccept}>
                         <Flex>
-                            <Input 
-                            required 
-                            onChange={({ target }) => setNewClient({...newClient, symbol: target.value})} 
-                            placeholder="Symbol" />
                             <Input
-                            required 
-                            onChange={({ target }) => setNewClient({...newClient, nazwa: target.value})} 
-                            placeholder="Nazwa" />
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, symbol: target.value })}
+                                placeholder="Symbol" />
                             <Input
-                            required
-                            
-                            onChange={({ target }) => setNewClient({...newClient, nip: target.value})} 
-                            placeholder="Nip" />
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, nazwa: target.value })}
+                                placeholder="Nazwa" />
                             <Input
-                            required 
-                            onChange={({ target }) => setNewClient({...newClient, kod: target.value})} 
-                            placeholder="Kod pocztowy" />
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, kod: target.value })}
+                                placeholder="Kod pocztowy" />
                             <Input
-                            required 
-                            onChange={({ target }) => setNewClient({...newClient, miejscowosc: target.value})} 
-                            placeholder="Miejscowosc" />
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, kraj: target.value })}
+                                placeholder="Kraj" />
                             <Input
-                            required 
-                            onChange={({ target }) => setNewClient({...newClient, adres: target.value})} 
-                            placeholder="Adres" />
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, miejscowosc: target.value })}
+                                placeholder="Miejscowosc" />
                             <Input
-                            required 
-                            onChange={({ target }) => setNewClient({...newClient, kraj: target.value})} 
-                            placeholder="Kraj" />
-                            <Input 
-                            required 
-                            type="email"
-                            onChange={({ target }) => setNewClient({...newClient, email: target.value})} 
-                            placeholder="Email" />
-                            <Input 
-                            required 
-                            onChange={({ target }) => setNewClient({...newClient, telefon: target.value})} 
-                            placeholder="Telefon" />
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, adres: target.value })}
+                                placeholder="Adres" />
+                            <Input
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, nip: target.value })}
+                                placeholder="Nip" />
+                            <Input
+                                required
+                                type="email"
+                                onChange={({ target }) => setNewClient({ ...newClient, email: target.value })}
+                                placeholder="Email" />
+                            <Input
+                                required
+                                onChange={({ target }) => setNewClient({ ...newClient, telefon: target.value })}
+                                placeholder="Telefon" />
                         </Flex>
-
                         <ButtonContainer>
                             <FromSubmitButton type="submit" value='Dodaj'></FromSubmitButton>
                             <NewOrderButton onClick={() => onClose()}>Anuluj</NewOrderButton>

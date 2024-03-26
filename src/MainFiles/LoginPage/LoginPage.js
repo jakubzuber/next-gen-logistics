@@ -14,6 +14,7 @@ const LoginPage = () => {
   const navigate = useNavigate()
 
   const fetchLoginData = async (username) => {
+   
     const returnedPassword = await fetch('/valideLogIn', {
       method: 'POST',
       headers: {

@@ -31,6 +31,7 @@ const Clients = () => {
     const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
     const [showColumnFilters, setShowColumnFilters] = useState(false);
 
+    //new client modal
     useEffect(() => {
         dispatch(fetchClients())
     }, [dispatch]);
@@ -42,6 +43,25 @@ const Clients = () => {
     const closeModal = () => {
         setModal(false)
     };
+
+    // modal for created clients
+    const initialDetails = {
+        show: false,
+        kod: null,
+    };
+
+    const [details, setDetails] = useState(initialDetails);
+    
+    const openDetials = ({ idCient }) => {
+        setDetails({ show: true, kod: idCient })
+        console.log(details)
+        //dispatch(fetchStocksDetails(kodProduktu))
+    };
+
+    const closeDetils = () => {
+        setDetails({ show: false, kod: null })
+    };
+
 
     const columns = useMemo(
         () => [
@@ -146,7 +166,11 @@ const Clients = () => {
                     data={clientsList}
                     enableColumnOrdering={false}
                     enableBottomToolbar={false}
-                    muiTableBodyRowProps={{ hover: false, sx: { backgroundColor: '#1266d4', color: 'white' } }}
+                    muiTableBodyRowProps={({ row }) => ({
+                        onClick: () => {openDetials({ idCient: row.original.ID })},
+                        hover: false,
+                        sx: { backgroundColor: '#1266d4', color: 'white', cursor: 'pointer', ":hover": { backgroundColor: '#1457ad' } }
+                    })}
                     muiTableBodyProps={{ sx: { backgroundColor: '#1266d4', color: 'white' } }}
                     muiTableBodyCellProps={{ sx: { color: 'white' } }}
                     muiTableHeadRowProps={{ sx: { backgroundColor: '#1266d4' } }}
@@ -218,7 +242,6 @@ const Clients = () => {
                         }}
                     >
                         <div style={{ backgroundColor: 'white', margin: 20, borderRadius: 20 }} ><MRT_TablePagination table={tableInstanceRef.current} /></div>
-
                     </Toolbar>
                 )}
             </Box>
